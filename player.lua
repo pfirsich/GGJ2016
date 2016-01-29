@@ -11,7 +11,7 @@ function getPlayerController_Gamepad(joystick)
 	return ctrl
 end
 
-function newPlayer(name, image, controller)
+function players.new(name, image, controller)
 	local player = {}
 	player.name = name
 	player.position = {0, 0}
@@ -23,14 +23,13 @@ function newPlayer(name, image, controller)
 	table.insert(players, player)
 end
 
-function updatePlayers()
+function players.update()
 	for i, player in ipairs(players) do
 		input.updateController(player.controller)
-		print(player.controller.moveX.state, player.controller.moveY.state)
 	end
 end
 
-function drawPlayers()
+function players.draw()
 	for i, player in ipairs(players) do
 		love.graphics.draw(player.image, player.position[1], player.position[2], player.angle, 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
 	end
