@@ -10,18 +10,34 @@ input = {}
 
 -- end
 
+function input._control(getState)
+	return {
+		getState = getState,
+		state = 0,
+		lastState = 0,
+		pressed = false,
+		released = false
+	}
+end
+
 function input.floatInput_fromKeyboard(negative, positive)
-	return {getState = function()
-		return (love.keyboard.isDown(positive) and 1.0 or 0.0) - (love.keyboard.isDown(negative) and 1.0 or 0.0)
-	end}
+	return input._control(function() return (love.keyboard.isDown(positive) and 1.0 or 0.0) - (love.keyboard.isDown(negative) and 1.0 or 0.0) end)
 end
 
 function input.binaryInput_fromKeyboard(key)
-	return {getState = function() return love.keyboard.isDown(key) end}
+	return input._control(function() return love.keyboard.isDown(key) end)
+end
+
+function input.binaryInput_fromGamepad(joystick, button)
+	return input._control(function() return joystick:isGamepadDown(button) end)
+end
+
+function input.floatInput_fromGamepad(joystick, axis)
+	return input._control(function() return joystick:getGamepadAxis(axis) end)
 end
 
 function input.updateController(controller)
-	for k, control in pairs(ctrl) do
+	for k, control in pairs(controller) do
 		control.lastState = control.state
 		control.state = control.getState()
 		if type(control.state) == "boolean" then control.state = (control.state and 1 or 0) end

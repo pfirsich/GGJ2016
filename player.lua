@@ -4,6 +4,13 @@ players.images = {
 	love.graphics.newImage("media/player.png"),
 }
 
+function getPlayerController_Gamepad(joystick)
+	local ctrl = {}
+	ctrl.moveX = input.floatInput_fromGamepad(joystick, "leftx")
+	ctrl.moveY = input.floatInput_fromGamepad(joystick, "lefty")
+	return ctrl
+end
+
 function newPlayer(name, image, controller)
 	local player = {}
 	player.name = name
@@ -19,6 +26,7 @@ end
 function updatePlayers()
 	for i, player in ipairs(players) do
 		input.updateController(player.controller)
+		print(player.controller.moveX.state, player.controller.moveY.state)
 	end
 end
 

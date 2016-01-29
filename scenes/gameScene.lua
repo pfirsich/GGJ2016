@@ -9,7 +9,7 @@ function scenes.gameScene.load()
 end
 
 function scenes.gameScene.onEnter(fromScene)
-	newPlayer("Joel", players.images[players.imageIndex])
+	newPlayer("Joel", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	players.imageIndex = players.imageIndex + 1
 end
 
@@ -18,6 +18,7 @@ function scenes.gameScene.tick()
 	-- if scenes.gameScene.i % 10 == 0 then
 	-- 	print ("sec")
 	-- end
+	updatePlayers()
 end
 
 function scenes.gameScene.draw()
