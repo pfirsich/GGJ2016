@@ -1,6 +1,8 @@
 require "const"
 require "input"
 require "scenes"
+require "player"
+require "math_vec"
 
 function love.load()
 	for k, scene in pairs(scenes) do
