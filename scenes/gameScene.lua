@@ -6,6 +6,8 @@ function scenes.gameScene.load()
 		local j = love.math.random(1, i)
 		players.images[i], players.images[j] = players.images[j], players.images[i]
 	end
+
+	scenes.gameScene.map = maps.new("TestMap")
 end
 
 function scenes.gameScene.onEnter(fromScene)
@@ -19,9 +21,12 @@ function scenes.gameScene.tick()
 	-- 	print ("sec")
 	-- end
 	players.update()
+	camera.update()
 end
 
 function scenes.gameScene.draw()
-	--camera.apply()
+	camera.push()
+	maps.draw(scenes.gameScene.map)
 	players.draw()
+	camera.pop()
 end
