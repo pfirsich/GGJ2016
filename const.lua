@@ -17,5 +17,8 @@ const = {
 
 	maps = {
 		MAX_SPRITES = 10000
-	}
+	},
+
+	PLAYER_SPEED = 100, --maximal speed of player character
+	GP_DEADZONE = 0.2, --gamepad deadzone
 }
