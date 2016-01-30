@@ -4,7 +4,7 @@ SIM_DT = 1/60.0
 
 const = {
 
-	PLAYER_SPEED = 250; --maximal speed of player character
+	PLAYER_SPEED = 450; --maximal speed of player character
 	GP_DEADZONE = 0.2; --gamepad deadzone
 
 	SIM_DT = SIM_DT,
@@ -24,7 +24,7 @@ const = {
 	},
 
 	player = {
-		WALL_BOUNCE = 10.0,
+		WALL_BOUNCE = 0.0,
 	},
 
 	DOOR_DEADTIME = 0.2

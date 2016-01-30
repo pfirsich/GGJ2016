@@ -21,10 +21,19 @@ function players.new(name, image, controller)
 	player.name = name
 	player.position = {0, 0}
 	player.velocity = {0, 0}
+	player.lastVelocity = {0, 0}
 	player.image = image
 	player.angle = 0
 	player.controller = controller
 	player.rituals = generateRituals(12)
+	player.imageIndex = players.imageIndex
+	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 9)
+	player.animationSet.animations = {
+		stand = animation(1, 1, 1.0),
+		walk = animation(1, 8, 16.0),
+		fallen = animation(9, 9, 20.0)
+	}
+	player.animationSet:setAnimation("stand")
 
 	table.insert(players, player)
 	players.imageIndex = players.imageIndex + 1
@@ -48,10 +57,19 @@ function players.update()
 			player.velocity = {0, 0}
 		end
 
+		if vnorm(player.lastVelocity) < 1.0 and vnorm(player.velocity) > 1.0 then
+			player.animationSet:setAnimation("walk")
+		end
+
+		if vnorm(player.lastVelocity) > 1.0 and vnorm(player.velocity) < 1.0 then
+			player.animationSet:setAnimation("stand")
+		end
+		player.lastVelocity = vret(player.velocity)
+
 		-- collision
 		local penalty = 1.0
 		if vnorm(player.velocity) > 0.001 then
-			penalty = 1.0 + vdot(player.velocity, vpolar(player.angle, 1.0)) / vnorm(player.velocity) * 0.50
+			penalty = 1.0 + math.min(vdot(player.velocity, vpolar(player.angle, 1.0)) / vnorm(player.velocity), 0.0) * 0.5
 		end
 		player.position = vadd(player.position, vmul(player.velocity, const.SIM_DT * penalty))
 
@@ -110,13 +128,20 @@ function players.update()
 				end
 			end
 		end
+
+		player.animationSet:update(const.SIM_DT)
 	end
 end
 
 function players.draw()
 	for i, player in ipairs(players) do
+		love.graphics.setColor(255, 255, 255, 30)
+		local dir = vpolar(player.angle, 4.0 * const.TILESIZE)
+		love.graphics.setLineWidth(1)
+		love.graphics.line(player.position[1], player.position[2], player.position[1] + dir[1], player.position[2] + dir[2])
 		love.graphics.setColor(255, 255, 255, 255)
 		if player.col then love.graphics.setColor(255, 0, 0, 255) end
+		player.animationSet:draw(player.position[1], player.position[2], vangle(player.velocity), 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
 		love.graphics.draw(player.image, player.position[1], player.position[2], player.angle + math.pi, 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
 	end
 	love.graphics.setColor(255, 255, 255, 255)
