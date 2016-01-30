@@ -54,6 +54,10 @@ function enemies.update()
 			end
 
 		elseif enemy.type == 3 then
+			playerToDes = players[1]
+
+			pathOfDes = findPath(enemy.pos[1], enemy.pos[2], playerToDes.pos[2], playerToDes.pos[2])
+
 
 		end
 

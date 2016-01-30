@@ -9,6 +9,9 @@ function scenes.gameScene.load()
 	-- end
 
 	loadMap("level_2")
+	loadMapPF("level_2")
+	--(sPosX, sPosY, ePosX, ePosY)
+	
 end
 
 function scenes.gameScene.onEnter(fromScene)
