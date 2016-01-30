@@ -1,3 +1,4 @@
+require "pathfinder"
 scenes.gameScene = {}
 
 function scenes.gameScene.load()
@@ -8,6 +9,8 @@ function scenes.gameScene.load()
 	end
 
 	loadMap("TestMap")
+	loadMapPF("TestMap")
+	findPath(400, 500, 450, 600)
 end
 
 function scenes.gameScene.onEnter(fromScene)
