@@ -12,7 +12,7 @@ const = {
 	TILESIZE = TILESIZE,
 
 	camera = {
-		MOVE_SPEED = 10.0,
+		MOVE_SPEED = 5.0,
 		SCALE_SPEED = 10.0,
 		MAX_SCALE = 1.5,
 		PLAYER_MARGIN = 0 * TILESIZE,
@@ -22,4 +22,8 @@ const = {
 	maps = {
 		MAX_SPRITES = 10000
 	},
+
+	player = {
+		WALL_BOUNCE = 0.0
+	}
 }

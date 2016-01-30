@@ -23,6 +23,9 @@ function loadMap(name)
 	for i, layer in ipairs(map.layers) do
 		if layer.visible then
 			if layer.type == "tilelayer" then
+				map.width = layer.width
+				map.height = layer.height
+
 				layer._spriteBatch = love.graphics.newSpriteBatch(tileset._imageObject, const.maps.MAX_SPRITES, "static")
 				local index = 1
 				layer.tileMap = {}
@@ -57,5 +60,5 @@ function drawMap()
 end
 
 function worldToTiles(x, y)
-	return x % map.tilewidth, y % map.tileheight
+	return math.floor(x / map.tilewidth) + 1, math.floor(y / map.tileheight) + 1
 end

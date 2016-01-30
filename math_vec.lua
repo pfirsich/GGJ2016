@@ -3,7 +3,7 @@ function vmul(a,s)
 end
 
 function vfunc(a, func)
-	return {func(a[1]), func(a[2])} 
+	return {func(a[1]), func(a[2])}
 end
 
 function vmulx(a,s)
@@ -40,6 +40,10 @@ function vstr(a)
 	return a[1] .. ", " .. a[2]
 end
 
+function vret(a)
+	return {a[1], a[2]}
+end
+
 function vsub(a,b)
 	return {a[1]-b[1], a[2]-b[2]}
 end
@@ -54,8 +58,8 @@ function clampDown(v, min)
 	return v
 end
 
-function clamp(v, min, max)
-	return clampUp(clampDown(v, min), max)
+function clamp(v, lo, hi)
+	return math.max(math.min(v, hi), lo)
 end
 
 function lerp(a,b,t)
