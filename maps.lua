@@ -29,6 +29,11 @@ function maps.new(name)
 						local tileIndex = layer.data[index]
 						index = index + 1
 						if tileIndex > 0 then
+							layer._spriteBatch:setColor(255, 255, 255, 255)
+							if tileIndex == 28 then
+								local h = love.math.random(200, 255)
+								layer._spriteBatch:setColor(h, h, h, 255)
+							end
 							-- if index < 120 then print(tileIndex) end
 							layer._spriteBatch:add(tileset._quads[tileIndex], x*tileset.tilewidth, y*tileset.tileheight)
 						end

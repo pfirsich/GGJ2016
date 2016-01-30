@@ -1,7 +1,8 @@
 players = {}
 players.imageIndex = 1
 players.images = {
-	newImage("media/player.png"),
+	newImage("media/images/Player1.png"),
+	newImage("media/images/Player2.png"),
 }
 
 function getPlayerController_Gamepad(joystick)
