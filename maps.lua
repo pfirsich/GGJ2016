@@ -5,7 +5,7 @@ function maps.new(name)
 	local mapTable = assert(loadstring(mapFile))()
 
 	for i, tileset in ipairs(mapTable.tilesets) do
-		tileset._imageObject = newImage("media/images/" .. tileset.image)
+		tileset._imageObject = newImage("media/maps/" .. tileset.image)
 
 		tileset._tileCountX = tileset.imagewidth / tileset.tilewidth
 		tileset._tileCountY = tileset.imageheight / tileset.tileheight

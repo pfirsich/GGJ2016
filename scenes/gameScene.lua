@@ -13,6 +13,8 @@ end
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Joel", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	players.imageIndex = players.imageIndex + 1
+	enemies.new("Heinz", enemies.images[enemies.imageIndex], 1)
+	enemies.imageIndex = enemies.imageIndex + 1
 end
 
 function scenes.gameScene.tick()
@@ -21,6 +23,7 @@ function scenes.gameScene.tick()
 	-- 	print ("sec")
 	-- end
 	players.update()
+	enemies.update()
 	camera.update()
 end
 
@@ -28,5 +31,6 @@ function scenes.gameScene.draw()
 	camera.push()
 	maps.draw(scenes.gameScene.map)
 	players.draw()
+	enemies.draw()
 	camera.pop()
 end

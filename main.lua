@@ -6,6 +6,7 @@ require "player"
 require "math_vec"
 require "camera"
 require "maps"
+require "enemies"
 
 function love.load()
 	for k, scene in pairs(scenes) do
