@@ -4,8 +4,10 @@ SIM_DT = 1/60.0
 
 const = {
 
-	PLAYER_SPEED = 450; --maximal speed of player character
-	GP_DEADZONE = 0.2; --gamepad deadzone
+	PLAYER_SPEED = 450, --maximal speed of player character
+	GP_DEADZONE = 0.2, --gamepad deadzone
+
+	
 
 	SIM_DT = SIM_DT,
 
@@ -28,7 +30,7 @@ const = {
 	},
 
 	DOOR_DEADTIME = 0.2,
-
+	SOU_VOLUME = 0.5,                -- Set up the ingame volume from 0 to 1
 	FALL_TURN_SPEED = 4.5,
 	FALL_DURATION = 1.5,
 	FALL_SPEED = 2.0 * TILESIZE,

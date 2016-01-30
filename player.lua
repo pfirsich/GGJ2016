@@ -1,9 +1,24 @@
+
+
 players = {}
 players.imageIndex = 1
 players.images = {
 	newImage("media/images/Player1.png"),
 	newImage("media/images/Player2.png"),
 }
+players.pchn01_vol = const.SOU_VOLUME * .1
+players.pchn01_snd = {
+	"media/sounds/punch1.waw",
+	"media/sounds/punch2.waw",
+	"media/sounds/punch3.waw",
+}
+players.pchn02_vol = const.SOU_VOLUME * .2
+players.pchn02_snd = {
+	"media/sounds/punchdown1.waw",
+	"media/sounds/punchdown2.waw",
+}
+players.mov_vol = const.SOU_VOLUME * .05
+players.mov_snd = {"media/sounds/singlefootstep"}
 
 function getPlayerController_Gamepad(joystick)
 	local ctrl = {}
@@ -54,20 +69,24 @@ function players.shove(player, direction)
 	player.fallEnd = scenes.gameScene.simTime + const.FALL_DURATION
 	player.fallen = true
 	player.animationSet:setAnimation("fallen")
+		TEsound.play(players.pchn02_snd, players.pchn02_vol)
 	player.fallDirection = vnormed(direction)
 end
 
 function players.update()
+	TEsound.cleanup()
 	for i, player in ipairs(players) do
 		input.updateController(player.controller)
 
 		if player.controller.autoaggression.pressed then
 			players.shove(player, vrotate({1,0}, love.math.random() * 2.0 * math.pi))
+				TEsound.play(players.pchn02_snd, players.pchn02_vol*2)						
 		end
 
 
 		if player.controller.shove.pressed and not player.fallen then
 			player.shoveStart = scenes.gameState.simTime
+				TEsound.play(players.pchn01_snd, players.pchn01_vol, love.math.random())
 
 			for j, other in ipairs(players) do
 				if i ~= j then
@@ -101,6 +120,7 @@ function players.update()
 		if not player.fallen then
 			if vnorm(player.lastVelocity) < 1.0 and vnorm(player.velocity) > 1.0 then
 				player.animationSet:setAnimation("walk")
+					TEsound.play(players.mov_snd, players.mov_vol, love.math.random())
 			end
 
 			if vnorm(player.velocity) < 1.0 then
@@ -158,6 +178,7 @@ function players.update()
 		--fighting
 		if player.controller.attack.pressed then
 			player_attack(player)
+			TEsound.sound()
 		end
 
 		-- objects
