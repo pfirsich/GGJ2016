@@ -23,20 +23,22 @@ function enemies.draw()
 end
 
 function enemies.update()
-	for i, enemy in ipairs(enemies) do
-		enemy.angle = enemy.angle + 0.05
-		enemy.velocity = {100, 100}
-		enemy.position = vadd(enemy.position, vmul(enemy.velocity, const.SIM_DT))
-	
+	for i, enemy in ipairs(enemies) do	
 
 	if enemy.type == 1 then
-		while enemy.angle < math.pi do
-			enemy.angle = enemy.angle + math.pi/36 * const.SIM_DT
-		end
-		elseif enemy.type == 2 then
+	while enemy.angle > math.pi do
+		love.love.timer.sleep(3s)
+		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
+	end
+	while enemy.angle < math.pi do
+		love.love.timer.sleep(3s)
+		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
+	end
+	elseif enemy.type == 2 then
 
-			elseif enemy.type == 3 then
+	elseif enemy.type == 3 then
 
-				end
+	end
+	
 	end
 end
