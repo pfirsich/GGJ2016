@@ -27,14 +27,14 @@ function enemies.update()
 	for i, enemy in ipairs(enemies) do	
 
 	if enemy.type == 1 then
-	while enemy.angle > math.pi do
-		love.timer.sleep(3s)
-		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
-	end
-	while enemy.angle < math.pi do
-		love.timer.sleep(3s)
-		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
-	end
+	--while enemy.angle > math.pi do
+
+		--enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
+	--end
+	--while enemy.angle < math.pi do
+
+		--enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
+	--end
 	elseif enemy.type == 2 then
 
 	elseif enemy.type == 3 then
