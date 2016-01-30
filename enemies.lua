@@ -12,6 +12,11 @@ function enemies.new(name, image, type)
 	enemy.image = image
 	enemy.angle = 0
 	enemy.type = type
+	enemy.shouldTurn = false
+
+	enemy.startTimer = 0
+
+	local temp_angle = 0
 
 	table.insert(enemies, enemy)
 end
@@ -23,23 +28,85 @@ function enemies.draw()
 end
 
 function enemies.update()
+	
+	for i, enemy in ipairs(enemies) do
+		
 
-	for i, enemy in ipairs(enemies) do	
+		if enemy.type == 1 then
+			if enemy.startTimer == 0 then
+				enemy.startTimer = scenes.currentScene.simTime
 
-	if enemy.type == 1 then
-	--while enemy.angle > math.pi do
+			end
+			if (scenes.currentScene.simTime - enemy.startTimer) > 1  or enemy.shouldTurn then
+				enemies.tarangle(3/4 * math.pi, 1, enemy)
+			end
 
-		--enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
-	--end
-	--while enemy.angle < math.pi do
+		elseif enemy.type == 2 then
 
-		--enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
-	--end
-	elseif enemy.type == 2 then
+		elseif enemy.type == 3 then
 
-	elseif enemy.type == 3 then
-
-	end
+		end
 	
 	end
+end
+
+-- function enemies.tarangle(angle, speed, enemy)
+-- 	enemy.shouldTurn = true
+
+-- 	if enemy.angle%math.pi < angle%math.pi and math.abs(angle%math.pi - enemy.angle%math.pi) < math.pi/32 then
+-- 		enemy.angle = angle
+-- 		enemy.shouldTurn = false
+-- 		enemy.startTimer = scenes.currentScene.simTime
+-- 	end
+
+-- 	if math.abs(enemy.angle - angle)  then
+-- 		enemy.angle = enemy.angle + math.pi*speed*const.SIM_DT
+-- 	else
+-- 		enemy.angle = enemy.angle - math.pi*speed*const.SIM_DT
+-- 	end
+-- 	if enemy.angle%math.pi > angle%math.pi and math.abs(enemy.angle%math.pi - angle%math.pi) < math.pi/32 then
+-- 		enemy.angle = angle
+-- 		enemy.target_angle = angle + math.pi
+-- 		enemy.shouldTurn = false
+-- 		enemy.startTimer = scenes.currentScene.simTime
+-- 	end
+
+	
+
+-- end
+
+function enemies.tarangle(angle, speed, enemy)
+	enemy.shouldTurn = true
+
+	if math.abs(anglecalc(angle, enemy.angle)) < (math.pi/2) then
+		print("test")
+		enemy.angle = angle
+		enemy.shouldTurn = false
+		enemy.startTimer = scenes.currentScene.simTime
+	elseif	anglecalc(angle, enemy.angle) > 0  then
+			enemy.angle = enemy.angle - math.pi*speed*const.SIM_DT
+		else
+			enemy.angle = enemy.angle + math.pi*speed*const.SIM_DT
+		end
+
+
+
+	
+	-- if math.abs(anglecalc(enemy.angle, angle)) < math.pi/32 then
+	-- 	enemy.angle = angle
+	-- 	enemy.shouldTurn = false
+	-- 	enemy.startTimer = scenes.currentScene.simTime
+	-- end
+
+end
+
+function anglecalc (a, b)
+	local temp = (a - b)%(2*math.pi)
+	if temp > math.pi then
+		temp = - 2*math.pi + temp
+	end
+	if temp <= - math.pi then
+		temp = 2*math.pi - temp
+	end
+	return temp
 end
