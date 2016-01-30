@@ -59,5 +59,5 @@ function players.draw()
 end
 
 function player_attack(player)
-	return nil
+	player.angle = 90
 end
