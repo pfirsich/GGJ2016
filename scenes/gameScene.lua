@@ -29,7 +29,7 @@ end
 
 function scenes.gameScene.draw()
 	camera.push()
-	drawMap(map)
+	if map then drawMap() end
 	players.draw()
 	enemies.draw()
 	camera.pop()

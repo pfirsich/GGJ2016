@@ -1,8 +1,8 @@
-map = {}
+map = nil
 
 function loadMap(name)
 	local mapFile = assert(love.filesystem.read("media/maps/" .. name .. ".lua"))
-	local map = assert(loadstring(mapFile))()
+	map = assert(loadstring(mapFile))()
 
 	for i, tileset in ipairs(map.tilesets) do
 		tileset._imageObject = newImage("media/maps/" .. tileset.image)
@@ -34,8 +34,8 @@ function loadMap(name)
 						layer.tileMap[y][x] = tileIndex
 						if tileIndex > 0 then
 							layer._spriteBatch:setColor(255, 255, 255, 255)
-							if tileIndex == 28 then
-								local h = love.math.random(200, 255)
+							if tileIndex == 28 then -- floor
+								local h = love.math.random(175, 200)
 								layer._spriteBatch:setColor(h, h, h, 255)
 							end
 							-- if index < 120 then print(tileIndex) end

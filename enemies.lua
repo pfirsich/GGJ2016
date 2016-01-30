@@ -27,16 +27,16 @@ function enemies.update()
 		enemy.angle = enemy.angle + 0.05
 		enemy.velocity = {100, 100}
 		enemy.position = vadd(enemy.position, vmul(enemy.velocity, const.SIM_DT))
-	
 
-	if enemy.type == 1 then
-		while enemy.angle < math.pi do
-			enemy.angle = enemy.angle + math.pi/36 * const.SIM_DT
-		end
+
+		if enemy.type == 1 then
+			while enemy.angle < math.pi do
+				enemy.angle = enemy.angle + math.pi/36 * const.SIM_DT
+			end
 		elseif enemy.type == 2 then
 
-			elseif enemy.type == 3 then
+		elseif enemy.type == 3 then
 
-				end
+		end
 	end
 end
