@@ -28,11 +28,11 @@ function enemies.update()
 
 	if enemy.type == 1 then
 	while enemy.angle > math.pi do
-		love.love.timer.sleep(3s)
+		love.timer.sleep(3s)
 		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
 	end
 	while enemy.angle < math.pi do
-		love.love.timer.sleep(3s)
+		love.timer.sleep(3s)
 		enemy.angle = enemy.angle + math.pi/4 * const.SIM_DT
 	end
 	elseif enemy.type == 2 then
