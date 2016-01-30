@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="14">
  <tileset firstgid="1" name="wall_tileset" tilewidth="32" tileheight="32" tilecount="50" columns="5">
   <image source="wall_tileset.png" width="160" height="320"/>
  </tileset>
@@ -117,5 +117,7 @@
   <object id="7" type="door" x="1160" y="201.333" width="14.6667" height="42.6667"/>
   <object id="8" type="door" x="486.667" y="233.333" width="14.6667" height="41.3333"/>
   <object id="9" type="door" x="1000" y="744" width="44" height="16"/>
+  <object id="12" type="spawn" x="715" y="523" width="10" height="9"/>
+  <object id="13" type="spawn" x="875" y="556" width="7" height="10"/>
  </objectgroup>
 </map>
