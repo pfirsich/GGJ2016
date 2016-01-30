@@ -84,7 +84,7 @@ function players.update()
 
 		if player.controller.autoaggression.pressed then
 			players.shove(player, vrotate({1,0}, love.math.random() * 2.0 * math.pi))
-				TEsound.play(players.pchn02_snd, players.pchn02_vol*2)						
+				TEsound.play(players.pchn02_snd, players.pchn02_vol*2)
 		end
 
 		if player.controller.shove.pressed and not player.fallen then
@@ -225,6 +225,12 @@ function players.draw()
 		if player.animationSet.currentAnimation ~= "fallen" then
 			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
 								player.image:getWidth()/2, player.image:getHeight()/2)
+		end
+
+		local hit = castRayIntoMap({player.position, vadd(player.position, {10,0})})
+		if hit then
+			--print("hit")
+			--love.graphics.circle("fill", hit[1], hit[2], 20)
 		end
 	end
 	love.graphics.setColor(255, 255, 255, 255)

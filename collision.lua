@@ -132,26 +132,8 @@ function _circleAABBCollision(circle, aabb)
 	end
 end
 
--- function castRayIntoMap(ray)
--- 	local cur = vret(ray[1])
--- 	local dir = vsub(ray[2], ray[1])
-
--- 	if vdot(dir, dir) > 1 then
--- 		local dcur = vmul(vnormed(dir), const.TILESIZE * 0.9)
-
--- 		while cur[1] > 0 and cur[1] < map.width*const.TILESIZE and cur[2] > 0 and cur[2] < map.height*const.TILESIZE do
--- 			local c = {worldToTiles(unpack(cur))}
--- 			local tile = map.layers[1].tileMap[c[2]][c[1]]
--- 			if tile >= 1 and tile <= 26 then
--- 				return cur
--- 			end
--- 			cur = vadd(cur, dcur)
--- 		end
--- 	end
--- 	return cur
-
 -- ray = {origin, dir} = {{origin_x, origin_y}, {dir_x, dir_y}}
-function castRayIntoMap(ray, step)
+function castRayIntoMap_behindi(ray, step)
 	step = step or 0.2
 	local cur = vret(ray[1])
 	local dir = ray[2]
@@ -169,90 +151,40 @@ function castRayIntoMap(ray, step)
 	return nil
 end
 
--- function castRayIntoMap(ray)
--- 	t = 0
--- 	x = ray.start.x
--- 	y = ray.start.y
--- 	while inGrid(x,y) do
--- 		tx = math.floor(x / cellSize)
--- 		ty = math.floor(y / cellSize)
--- 		cells[ty][tx] = true
+function getRayCastHelperValues(origin, dir)
+	local tile = math.floor(origin / const.TILESIZE) + 1
 
--- 		dt_x = ((tx+1)*cellSize - x) / ray.direction.x
--- 		dt_y = ((ty+1)*cellSize - y) / ray.direction.y
+	local step, tMax
+	if dir > 0.0 then
+		step = 1.0
+		tMax = (const.TILESIZE*tile - origin) / dir -- maximal t (r = o + t*d) to hit next cell border
+	else
+		step = -1.0
+		tMax = (origin - const.TILESIZE*(tile-1)) / -dir
+	end
+	if dir == 0 then tMax = math.huge end
 
--- 		if dt_x < dt_y then
--- 		  t = t + dt_x
--- 		else
--- 		  t = t + dt_y
--- 		end
+	local tDelta = const.TILESIZE / dir * step -- cell width in units of t, * step to make it positive
 
--- 		x = ray.start.x + t*ray.direction.x
--- 		y = ray.start.y + t*ray.direction.y
---     end
--- end
+	return tile, step, tMax, tDelta
+end
 
--- function getRayCastHelperValues(origin, dir)
--- 	local tile = math.floor(origin / const.TILESIZE) + 1
+function castRayIntoMap(ray)
+	local rel = vsub(ray[2], ray[1])
+	local x, xStep, tMaxX, tDeltaX = getRayCastHelperValues(ray[1][1], rel[1])
+	local y, yStep, tMaxY, tDeltaY = getRayCastHelperValues(ray[1][2], rel[2])
 
--- 	local step, tMax
--- 	if dir > 0.0 then
--- 		step = 1.0
--- 		tMax = (const.TILESIZE*tile - origin) / dir -- maximal t (r = o + t*d) to hit next cell border
--- 	else
--- 		step = -1.0
--- 		tMax = (origin - const.TILESIZE*(tile-1)) / -dir
--- 	end
--- 	if dir == 0 then tMax = math.huge end
+	while x > 0 and x <= map.width and y > 0 and y <= map.height do
+		if map.layers[1].solid[y][x] then
+			return {x*const.TILESIZE, y*const.TILESIZE}
+		end
 
--- 	local tDelta = const.TILESIZE / dir * step -- cell width in units of t, * step to make it positive
-
--- 	return tile, step, tMax, tDelta
--- end
-
--- function castRayIntoMap(ray)
--- 	local rel = vsub(ray[2], ray[1])
--- 	local x, xStep, tMaxX, tDeltaX = getRayCastHelperValues(ray[1][1], rel[1])
--- 	local y, yStep, tMaxY, tDeltaY = getRayCastHelperValues(ray[1][2], rel[2])
-
--- 	while x > 0 and x <= map.width and y > 0 and y <= map.height do
--- 		local tile = map.layers[1].tileMap[y][x]
--- 		if tile >= 1 and tile <= 26 then
--- 			return {ray[1][1] + rel[1] * tMaxX, ray[1][2] + rel[2] * tMaxY}
--- 		end
-
--- 		if(tMaxX < tMaxY) then
--- 			tMaxX = tMaxX + tDeltaX
--- 			x = x + xStep
--- 		else
--- 			tMaxY = tMaxY + tDeltaY
--- 			y = y + yStep
--- 		end
--- 	end
--- end
-
--- function castRayIntoMap(ray)
--- 	local t = 0
--- 	local x = ray[1][1]
--- 	local y = ray[1][2]
--- 	while x > 0 and x <= map.width*const.TILESIZE and y > 0 and y <= map.height*const.TILESIZE do
--- 		local tx = math.floor(x / const.TILESIZE)
--- 		local ty = math.floor(y / const.TILESIZE)
-
--- 		local tile = map.layers[1].tileMap[y][x]
--- 		if tile >= 1 and tile <= 26 then
--- 			return {x, y}
--- 		end
-
--- 		local dt_x = ((tx + 1)*const.TILESIZE - x) / ray[2][1]
--- 		local dt_y = ((ty + 1)*const.TILESIZE - y) / ray[2][2]
-
--- 		if dt_x < dt_y then
--- 			t = t + dt_x
--- 		else
--- 			t = t + dt_y
--- 		end
-
--- 		x = ray[1]
--- 	end
--- end
+		if(tMaxX < tMaxY) then
+			tMaxX = tMaxX + tDeltaX
+			x = x + xStep
+		else
+			tMaxY = tMaxY + tDeltaY
+			y = y + yStep
+		end
+	end
+end
