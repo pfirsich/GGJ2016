@@ -12,7 +12,7 @@ function getCenterAndDist(axisIndex)
         local lookVec = vpolar(player.angle, const.camera.VIEW_OFFSET)
         center = center + lookVec[axisIndex]
     end
-    center = center / #players / 2
+    center = center / #players
 
     for i, player in ipairs(players) do
         local d = math.abs(player.position[axisIndex] - center) + const.camera.PLAYER_MARGIN

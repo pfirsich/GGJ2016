@@ -8,11 +8,11 @@ const = {
 	TILESIZE = TILESIZE,
 
 	camera = {
-		MOVE_SPEED = 0.9,
-		SCALE_SPEED = 4.9,
-		MAX_SCALE = 1/2.0,
+		MOVE_SPEED = 10.0,
+		SCALE_SPEED = 10.0,
+		MAX_SCALE = 1.5,
 		PLAYER_MARGIN = 0 * TILESIZE,
-		VIEW_OFFSET = 10*TILESIZE
+		VIEW_OFFSET = 2*TILESIZE
 	},
 
 	maps = {

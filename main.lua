@@ -1,3 +1,4 @@
+require "utility"
 require "const"
 require "input"
 require "scenes"
