@@ -23,6 +23,7 @@ function enemies.draw()
 end
 
 function enemies.update()
+
 	for i, enemy in ipairs(enemies) do	
 
 	if enemy.type == 1 then
