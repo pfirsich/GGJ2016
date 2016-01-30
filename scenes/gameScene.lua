@@ -7,7 +7,7 @@ function scenes.gameScene.load()
 		players.images[i], players.images[j] = players.images[j], players.images[i]
 	end
 
-	scenes.gameScene.map = maps.new("TestMap")
+	loadMap("TestMap")
 end
 
 function scenes.gameScene.onEnter(fromScene)
@@ -26,7 +26,7 @@ end
 
 function scenes.gameScene.draw()
 	camera.push()
-	maps.draw(scenes.gameScene.map)
+	drawMap(map)
 	players.draw()
 	camera.pop()
 end

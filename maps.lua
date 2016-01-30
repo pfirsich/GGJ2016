@@ -1,12 +1,13 @@
-maps = {}
+map = {}
 
-function maps.new(name)
+function loadMap(name)
 	local mapFile = assert(love.filesystem.read("media/maps/" .. name .. ".lua"))
-	local mapTable = assert(loadstring(mapFile))()
+	local map = assert(loadstring(mapFile))()
 
-	for i, tileset in ipairs(mapTable.tilesets) do
-		tileset._imageObject = newImage("media/images/" .. tileset.image)
+	for i, tileset in ipairs(map.tilesets) do
+		tileset._imageObject = newImage("media/maps/" .. tileset.image)
 
+		tileset._tilesize = tileset.tilewidth
 		tileset._tileCountX = tileset.imagewidth / tileset.tilewidth
 		tileset._tileCountY = tileset.imageheight / tileset.tileheight
 		tileset._quads = {}
@@ -18,16 +19,19 @@ function maps.new(name)
 		end
 	end
 
-	local tileset = mapTable.tilesets[1]
-	for i, layer in ipairs(mapTable.layers) do
+	local tileset = map.tilesets[1]
+	for i, layer in ipairs(map.layers) do
 		if layer.visible then
 			if layer.type == "tilelayer" then
 				layer._spriteBatch = love.graphics.newSpriteBatch(tileset._imageObject, const.maps.MAX_SPRITES, "static")
 				local index = 1
+				layer.tileMap = {}
 				for y = 1, layer.height do
+					layer.tileMap[y] = {}
 					for x = 1, layer.width do
 						local tileIndex = layer.data[index]
 						index = index + 1
+						layer.tileMap[y][x] = tileIndex
 						if tileIndex > 0 then
 							layer._spriteBatch:setColor(255, 255, 255, 255)
 							if tileIndex == 28 then
@@ -42,14 +46,16 @@ function maps.new(name)
 			end
 		end
 	end
-
-	return mapTable
 end
 
-function maps.draw(map)
+function drawMap()
 	for i, layer in ipairs(map.layers) do
 		if layer._spriteBatch then
 			love.graphics.draw(layer._spriteBatch)
 		end
 	end
+end
+
+function worldToTiles(x, y)
+	return x % map.tilewidth, y % map.tileheight
 end
