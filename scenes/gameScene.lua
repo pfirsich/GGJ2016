@@ -8,7 +8,7 @@ function scenes.gameScene.load()
 	-- 	players.images[i], players.images[j] = players.images[j], players.images[i]
 	-- end
 
-	loadMap("level_1")
+	loadMap("level_2")
 end
 
 function scenes.gameScene.onEnter(fromScene)
