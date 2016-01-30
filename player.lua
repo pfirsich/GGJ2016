@@ -33,13 +33,14 @@ function players.update()
 		--velocity
 	player.velocity = vmul({player.controller.moveX.state, player.controller.moveY.state}, const.PLAYER_SPEED)
 	if vnorm({player.controller.moveX.state, player.controller.moveY.state}) < const.GP_DEADZONE then --deadzone
-		player.velocity = vmul(player.velocity, 0.8)
+		player.velocity = {0, 0}
 	end
+
 	player.position = vadd(player.position, vmul(player.velocity, const.SIM_DT))
 
 		--orientation
 	if vnorm({player.controller.angleX.state, player.controller.angleY.state}) > const.GP_DEADZONE * 2 then --deadzone, higher than above because orientation with analog stick is weird
-		player.angle = vangle({player.controller.angleX.state, player.controller.angleY.state}) + math.pi/2
+		player.angle = vangle({player.controller.angleX.state, player.controller.angleY.state})
 	end
 
 	end
