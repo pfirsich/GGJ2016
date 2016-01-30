@@ -1,5 +1,9 @@
 map = nil
 
+function tileIndexIsFloor(index)
+	return index >= 35 and index <= 45
+end
+
 function loadMap(name)
 	local mapFile = assert(love.filesystem.read("media/maps/" .. name .. ".lua"))
 	map = assert(loadstring(mapFile))()
@@ -29,20 +33,53 @@ function loadMap(name)
 				layer._spriteBatch = love.graphics.newSpriteBatch(tileset._imageObject, const.maps.MAX_SPRITES, "static")
 				local index = 1
 				layer.tileMap = {}
+				layer.solid = {}
 				for y = 1, layer.height do
 					layer.tileMap[y] = {}
+					layer.solid[y] = {}
 					for x = 1, layer.width do
 						local tileIndex = layer.data[index]
 						index = index + 1
 						layer.tileMap[y][x] = tileIndex
+						layer.solid[y][x] = tileIndex > 0 and tileIndex <= 34
 						if tileIndex > 0 then
 							layer._spriteBatch:setColor(255, 255, 255, 255)
-							if tileIndex == 28 then -- floor
+							if tileIndex >= 35 and tileIndex <= 45 then -- floor
 								local h = love.math.random(175, 200)
 								layer._spriteBatch:setColor(h, h, h, 255)
 							end
 							-- if index < 120 then print(tileIndex) end
 							layer._spriteBatch:add(tileset._quads[tileIndex], x*tileset.tilewidth, y*tileset.tileheight)
+						end
+					end
+				end
+			end
+
+			if layer.type == "objectgroup" then
+				for i, mapObject in ipairs(layer.objects) do
+					if mapObject.visible then
+						local object = newObject(mapObject.type)
+
+						if mapObject.type == "door" then
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+							object.tiles = {{tx, ty}}
+							if mapObject.height > mapObject.width then
+								object.angle = object.angle + math.pi/2.0
+								object.position[1] = object.position[1] + 0.5 * const.TILESIZE
+								object.offset[2] = 0.5
+								table.insert(object.tiles, {tx, ty+1})
+								object.horizontal = true
+							else
+								object.angle = 0
+								object.position[2] = object.position[2] + 0.5 * const.TILESIZE
+								object.offset[2] = 0.5
+								table.insert(object.tiles, {tx+1, ty})
+								object.horizontal = true
+							end
+
+							object.doorNormal = vortho(vpolar(object.angle, 1.0))
+							object:updateTiles()
 						end
 					end
 				end

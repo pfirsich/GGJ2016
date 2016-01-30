@@ -12,6 +12,7 @@ function getPlayerController_Gamepad(joystick)
 	ctrl.angleX = input.floatInput_fromGamepad(joystick, "rightx")
 	ctrl.angleY = input.floatInput_fromGamepad(joystick, "righty")
 	ctrl.attack = input.binaryInput_fromFloatInput(input.floatInput_fromGamepad(joystick, "triggerright"), 0.4)
+	ctrl.interact = input.binaryInput_fromGamepad(joystick, "a")
 	return ctrl
 end
 
@@ -23,8 +24,10 @@ function players.new(name, image, controller)
 	player.image = image
 	player.angle = 0
 	player.controller = controller
+	player.rituals = generateRituals(12)
 
 	table.insert(players, player)
+	players.imageIndex = players.imageIndex + 1
 end
 
 function slide(vec, normal, reflect) -- normal should be normalized
@@ -46,10 +49,14 @@ function players.update()
 		end
 
 		-- collision
-		player.position = vadd(player.position, vmul(player.velocity, const.SIM_DT))
+		local penalty = 1.0
+		if vnorm(player.velocity) > 0.001 then
+			penalty = 1.0 + vdot(player.velocity, vpolar(player.angle, 1.0)) / vnorm(player.velocity) * 0.50
+		end
+		player.position = vadd(player.position, vmul(player.velocity, const.SIM_DT * penalty))
 
 		local getCollisionShape = function()
-			local playerSize = 0.8 * const.TILESIZE
+			local playerSize = 0.9 * const.TILESIZE
 			local shape = {
 				type = "box",
 				data = {player.position[1] - playerSize/2, player.position[2] - playerSize/2,
@@ -64,7 +71,7 @@ function players.update()
 		for y = startY, endY do
 			for x = startX, endX do
 				local tile = map.layers[1].tileMap[y][x]
-				if tile >= 1 and tile <= 26 then
+				if map.layers[1].solid[y][x] then
 					local mtv = _aabbCollision(shape.data, {x*const.TILESIZE, y*const.TILESIZE, (x+1)*const.TILESIZE, (y+1)*const.TILESIZE})
 					if mtv then
 						player.position = vadd(player.position, mtv)
@@ -90,6 +97,18 @@ function players.update()
 		--fighting
 		if player.controller.attack.pressed then
 			player_attack(player)
+		end
+
+		-- objects
+		for i, object in ipairs(objects) do
+			local rel = vsub(player.position, vadd(object.position, vrotate(object.interactOffset, object.angle)))
+			if vdot(rel, rel) < object.radius*object.radius then
+				object.interactable = true
+
+				if player.controller.interact.pressed then
+					object:interact(player)
+				end
+			end
 		end
 	end
 end

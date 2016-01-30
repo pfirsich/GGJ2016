@@ -107,3 +107,9 @@ function vcopy(to, from)
 	to[1] = from[1]
 	to[2] = from[2]
 end
+
+function vrotate(v, angle) -- radians!
+	local s = math.sin(angle)
+	local c = math.cos(angle)
+	return {c*v[1] - s*v[2], s*v[1] + c*v[2]}
+end

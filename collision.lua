@@ -92,6 +92,46 @@ function _aabbCollision(A, B) -- box: {{xleft, xright}, {yleft, yright}}
 	end
 end
 
+function _circleAABBCollision(circle, aabb)
+	local pCol = pointAABBMTV(circle[1], aabb)
+	if pCol then
+		local l = vnorm(pCol)
+		return vmul(pCol, (l + circle[2]) / l)
+	else
+		local dist = 0
+		local mtvs = {}
+		for i = 1, 2 do
+			if     circle[1][i] < aabb[i][1] then
+				local d = aabb[i][1] - circle[1][i]
+				dist = dist + d*d
+
+				local mtv = {0,0}
+				mtv[i] = mtv[i] - (circle[2] - d)
+				table.insert(mtvs, mtv)
+			elseif circle[1][i] > aabb[i][2] then
+				local d = circle[1][i] - aabb[i][2]
+				dist = dist + d*d
+
+				local mtv = {0,0}
+				mtv[i] = mtv[i] + (circle[2] - d)
+				table.insert(mtvs, mtv)
+			end
+		end
+
+		local minLength = math.huge
+		local mtv = {0,0}
+		for i = 1, #mtvs do
+			local l = mtvs[i][1]*mtvs[i][1] + mtvs[i][2]*mtvs[i][2]
+			if l < minLength then
+				minLength = l
+				mtv = mtvs[i]
+			end
+		end
+
+		return dist <= circle[2] * circle[2] and mtv or nil
+	end
+end
+
 -- function castRayIntoMap(ray)
 -- 	local cur = vret(ray[1])
 -- 	local dir = vsub(ray[2], ray[1])

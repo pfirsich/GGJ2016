@@ -8,6 +8,8 @@ require "camera"
 require "maps"
 require "enemies"
 require "collision"
+require "objects"
+require "rituals"
 
 function love.load()
 	for k, scene in pairs(scenes) do

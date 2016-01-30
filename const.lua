@@ -15,7 +15,7 @@ const = {
 		MOVE_SPEED = 5.0,
 		SCALE_SPEED = 10.0,
 		MAX_SCALE = 1.5,
-		PLAYER_MARGIN = 0 * TILESIZE,
+		PLAYER_MARGIN = 3.5 * TILESIZE,
 		VIEW_OFFSET = 2*TILESIZE
 	},
 
@@ -24,6 +24,8 @@ const = {
 	},
 
 	player = {
-		WALL_BOUNCE = 0.0
-	}
+		WALL_BOUNCE = 10.0,
+	},
+
+	DOOR_DEADTIME = 0.2
 }
