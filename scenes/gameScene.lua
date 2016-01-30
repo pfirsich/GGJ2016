@@ -1,3 +1,4 @@
+require "pathfinder"
 scenes.gameScene = {}
 
 function scenes.gameScene.load()
@@ -13,7 +14,7 @@ end
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	-- players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
-	enemies.new("Heinz", enemies.images[enemies.imageIndex], 1)
+	enemies.new("Heinz", enemies.images[enemies.imageIndex], 2)
 	enemies.imageIndex = enemies.imageIndex + 1
 end
 
