@@ -13,7 +13,7 @@ end
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Joel", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	players.imageIndex = players.imageIndex + 1
-	enemies.new("Heinz", enemies.images[enemies.imageIndex], 1)
+	enemies.new("Heinz", enemies.images[enemies.imageIndex], 2)
 	enemies.imageIndex = enemies.imageIndex + 1
 end
 
