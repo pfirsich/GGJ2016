@@ -1,7 +1,7 @@
 map = nil
 
 function tileIndexIsFloor(index)
-	return index >= 35 and index <= 45
+	return index >= 35 and index <= 40
 end
 
 function loadMap(name)
@@ -41,10 +41,10 @@ function loadMap(name)
 						local tileIndex = layer.data[index]
 						index = index + 1
 						layer.tileMap[y][x] = tileIndex
-						layer.solid[y][x] = tileIndex > 0 and tileIndex <= 34
+						layer.solid[y][x] = tileIndex > 0 and (tileIndex <= 34 or tileIndex > 40)
 						if tileIndex > 0 then
 							layer._spriteBatch:setColor(255, 255, 255, 255)
-							if tileIndex >= 35 and tileIndex <= 45 then -- floor
+							if tileIndexIsFloor(tileIndex) then -- floor
 								local h = love.math.random(175, 200)
 								layer._spriteBatch:setColor(h, h, h, 255)
 							end
