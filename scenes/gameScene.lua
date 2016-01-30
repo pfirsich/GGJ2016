@@ -47,7 +47,7 @@ function scenes.gameScene.draw()
 		love.graphics.draw(players.images[1], 0, playerSizeY, -math.pi/2.0, playerScale, playerScale)
 
 		for i = 1, #players[1].rituals do
-			shadowText(rituals[players[1].rituals[i]], 10, (i-1)*25 + playerSizeY)
+			shadowText(rituals[players[1].rituals[i]], 10, (i-1)*25 + playerSizeY + 10)
 		end
 	end
 
@@ -62,13 +62,13 @@ function scenes.gameScene.draw()
 			local text = rituals[players[2].rituals[i]]
 			print(text)
 			local textWidth = love.graphics.getFont():getWidth(text)
-			shadowText(text, love.graphics.getWidth() - textWidth - 10, (i-1)*25 + playerSizeY)
+			shadowText(text, love.graphics.getWidth() - textWidth - 10, (i-1)*25 + playerSizeY + 10)
 		end
 	end
 end
 
 function shadowText(text, x, y)
-	local shadowOffset = 3
+	local shadowOffset = 1
 	love.graphics.setColor(0, 0, 0, 255)
 	love.graphics.print(text, x + shadowOffset, y + shadowOffset)
 	love.graphics.setColor(255, 255, 0, 255)
