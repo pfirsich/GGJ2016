@@ -394,7 +394,7 @@ return {
         {
           id = 22,
           name = "",
-          type = "",
+          type = "spawn",
           shape = "rectangle",
           x = 1480,
           y = 136,
@@ -407,7 +407,7 @@ return {
         {
           id = 23,
           name = "",
-          type = "",
+          type = "spawn",
           shape = "rectangle",
           x = 1544,
           y = 138,

@@ -2,16 +2,11 @@ require "pathfinder"
 scenes.gameScene = {}
 
 function scenes.gameScene.load()
-	-- shuffle player images (randomize them)
-	-- for i = #players.images, 1, -1 do
-	-- 	local j = love.math.random(1, i)
-	-- 	players.images[i], players.images[j] = players.images[j], players.images[i]
-	-- end
-
-	loadMap("level_2")
-	loadMapPF("level_2")
+	local levelName = "level_3"
+	loadMap(levelName)
+	loadMapPF(levelName)
 	--(sPosX, sPosY, ePosX, ePosY)
-	
+
 end
 
 function scenes.gameScene.onEnter(fromScene)

@@ -1,4 +1,4 @@
-
+require "TEsound"
 
 players = {}
 players.imageIndex = 1
@@ -8,17 +8,17 @@ players.images = {
 }
 players.pchn01_vol = const.SOU_VOLUME * .1
 players.pchn01_snd = {
-	"media/sounds/punch1.waw",
-	"media/sounds/punch2.waw",
-	"media/sounds/punch3.waw",
+	"media/sounds/punch1.wav",
+	"media/sounds/punch2.wav",
+	"media/sounds/punch3.wav",
 }
 players.pchn02_vol = const.SOU_VOLUME * .2
 players.pchn02_snd = {
-	"media/sounds/punchdown1.waw",
-	"media/sounds/punchdown2.waw",
+	"media/sounds/punchdown1.wav",
+	"media/sounds/punchdown2.wav",
 }
-players.mov_vol = const.SOU_VOLUME * .05
-players.mov_snd = {"media/sounds/singlefootstep"}
+players.mov_vol = const.SOU_VOLUME * .01
+players.mov_snd = {"media/sounds/singlefootstep.wav"}
 
 function getPlayerController_Gamepad(joystick)
 	local ctrl = {}
@@ -36,7 +36,7 @@ end
 function players.new(name, image, controller)
 	local player = {}
 	player.name = name
-	player.position = {0, 0}
+	player.position = table.remove(map.spawns)
 	player.velocity = {0, 0}
 	player.lastVelocity = {0, 0}
 	player.image = image
@@ -45,6 +45,7 @@ function players.new(name, image, controller)
 	player.fallen = false
 	player.fallEnd = 0
 	player.rituals = generateRituals(12)
+	player.shoveStart = 0
 	player.imageIndex = players.imageIndex
 	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 9)
 	player.animationSet.animations = {
@@ -53,6 +54,9 @@ function players.new(name, image, controller)
 		fallen = animation(9, 9, 20.0)
 	}
 	player.animationSet:setAnimation("stand")
+
+	player.formerFrame = player.animationSet:getCurrentFrame()
+	player.currentFrame = player.animationSet:getCurrentFrame()
 
 	table.insert(players, player)
 	players.imageIndex = players.imageIndex + 1
@@ -83,17 +87,17 @@ function players.update()
 				TEsound.play(players.pchn02_snd, players.pchn02_vol*2)						
 		end
 
-
 		if player.controller.shove.pressed and not player.fallen then
-			player.shoveStart = scenes.gameState.simTime
-				TEsound.play(players.pchn01_snd, players.pchn01_vol, love.math.random())
-
+			player.shoveStart = scenes.gameScene.simTime
+			TEsound.play(players.pchn01_snd, players.pchn01_vol, love.math.random())
 			for j, other in ipairs(players) do
 				if i ~= j then
 					local rel = vsub(player.position, other.position)
 					if vdot(rel, rel) < const.PLAYER_SHOVE_DIST*const.PLAYER_SHOVE_DIST then
 						if vdot(rel, vpolar(player.angle, 1.0)) / vnorm(rel) < math.cos(const.PLAYER_SHOVE_ANGLE) then
-							players.shove(other, vsub(other.position, player.position))
+							if not other.fallen then
+								players.shove(other, vsub(other.position, player.position))
+							end
 						end
 					end
 				end
@@ -120,7 +124,9 @@ function players.update()
 		if not player.fallen then
 			if vnorm(player.lastVelocity) < 1.0 and vnorm(player.velocity) > 1.0 then
 				player.animationSet:setAnimation("walk")
-					TEsound.play(players.mov_snd, players.mov_vol, love.math.random())
+				if(player.currentFrame==1 or player.currentFrame==5) then
+            		TEsound.play(players.mov_snd, players.mov_vol)
+            	end
 			end
 
 			if vnorm(player.velocity) < 1.0 then
@@ -178,7 +184,6 @@ function players.update()
 		--fighting
 		if player.controller.attack.pressed then
 			player_attack(player)
-			TEsound.sound()
 		end
 
 		-- objects
@@ -193,12 +198,20 @@ function players.update()
 			end
 		end
 
+		if love.math.random() > .25 and(player.currentFrame==1 or player.currentFrame==5) and (player.formerFrame ~= player.currentFrame) then
+            TEsound.play(players.mov_snd, players.mov_vol, 0.25+(love.math.random())/2)
+        end
 		player.animationSet:update(const.SIM_DT * vnorm(player.velocity) / const.PLAYER_SPEED)
+		player.formerFrame = player.currentFrame
+		player.currentFrame = player.animationSet:getCurrentFrame()
 	end
 end
 
 function players.draw()
 	for i, player in ipairs(players) do
+		local shoveAmount = 1.0 - math.min(const.SHOVE_ANIM_DURATION, scenes.gameScene.simTime - player.shoveStart) / const.SHOVE_ANIM_DURATION
+		local shoveAnim = vmul(vnormed(player.velocity), math.sin(shoveAmount*math.pi)*math.sin(shoveAmount*math.pi)*const.SHOVE_AMOUNT)
+
 		love.graphics.setColor(255, 255, 255, 30)
 		local dir = vpolar(player.angle, 4.0 * const.TILESIZE)
 		love.graphics.setLineWidth(1)
@@ -207,9 +220,10 @@ function players.draw()
 		if player.col then love.graphics.setColor(255, 0, 0, 255) end
 		local angle = vangle(player.velocity)
 		if player.animationSet.currentAnimation == "fallen" then angle = scenes.gameScene.simTime * const.FALL_TURN_SPEED end
-		player.animationSet:draw(player.position[1], player.position[2], angle, 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
+		player.animationSet:draw(player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], angle, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
+								player.image:getWidth()/2, player.image:getHeight()/2)
 		if player.animationSet.currentAnimation ~= "fallen" then
-			love.graphics.draw(player.image, player.position[1], player.position[2], player.angle + math.pi, 1.0, 1.0,
+			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
 								player.image:getWidth()/2, player.image:getHeight()/2)
 		end
 	end

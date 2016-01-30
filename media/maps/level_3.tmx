@@ -126,7 +126,7 @@
   <object id="16" type="door" x="2474" y="2890" width="42" height="10"/>
   <object id="17" type="door" x="2474" y="2092" width="40" height="6"/>
   <object id="18" type="door" x="2478" y="1290" width="32" height="12"/>
-  <object id="22" x="1480" y="136" width="14" height="14"/>
-  <object id="23" x="1544" y="138" width="16" height="14"/>
+  <object id="22" type="spawn" x="1480" y="136" width="14" height="14"/>
+  <object id="23" type="spawn" x="1544" y="138" width="16" height="14"/>
  </objectgroup>
 </map>

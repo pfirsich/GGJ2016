@@ -55,12 +55,12 @@ function loadMap(name)
 				end
 			end
 
+			map.spawns = {}
 			if layer.type == "objectgroup" then
 				for i, mapObject in ipairs(layer.objects) do
 					if mapObject.visible then
-						local object = newObject(mapObject.type)
-
 						if mapObject.type == "door" then
+							local object = newObject(mapObject.type)
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
 							object.tiles = {{tx, ty}}
@@ -81,9 +81,16 @@ function loadMap(name)
 							object.doorNormal = vortho(vpolar(object.angle, 1.0))
 							object:updateTiles()
 						end
+
+						if mapObject.type == "spawn" then
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							table.insert(map.spawns, {(tx+0.5)*const.TILESIZE, (ty+0.5)*const.TILESIZE})
+						end
 					end
 				end
 			end
+
+			arrayShuffle(map.spawns)
 		end
 	end
 end

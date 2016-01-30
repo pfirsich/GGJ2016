@@ -22,11 +22,16 @@ function animationSet(image, frameCount)
         self.animations[self.currentAnimation].time = self.animations[self.currentAnimation].time + dt
     end
 
-    animSet.draw = function(self, ...)
+    animSet.getCurrentFrame = function(self)
         local anim = self.animations[self.currentAnimation]
         local frame = anim.from + math.floor(anim.time * anim.speed) % (anim.to - anim.from)
-        if anim.to == anim.from then frame = anim.from end
-        love.graphics.draw(animSet.image, animSet.frames[frame], ...)
+        if anim.to == anim.from then frame = anim.from end 
+        return frame
+    end
+
+    animSet.draw = function(self, ...)
+        local anim = self.animations[self.currentAnimation]
+        love.graphics.draw(animSet.image, animSet.frames[self:getCurrentFrame()], ...)
     end
 
     return animSet
