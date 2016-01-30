@@ -36,6 +36,16 @@ function input.floatInput_fromGamepad(joystick, axis)
 	return input._control(function() return joystick:getGamepadAxis(axis) end)
 end
 
+function gp_bintrigger(joystick, axis, threshold)
+	local output
+	local temp = input.floatInput_fromGamepad(joystick, axis).state
+	if (math.abs(temp)) > threshold then
+		output = true
+	else output = false
+	end
+	return output
+end
+
 function input.updateController(controller)
 	for k, control in pairs(controller) do
 		control.lastState = control.state

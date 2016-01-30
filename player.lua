@@ -11,6 +11,7 @@ function getPlayerController_Gamepad(joystick)
 	ctrl.moveY = input.floatInput_fromGamepad(joystick, "lefty")
 	ctrl.angleX = input.floatInput_fromGamepad(joystick, "rightx")
 	ctrl.angleY = input.floatInput_fromGamepad(joystick, "righty")
+	ctrl.buttonA = input.binaryInput_fromGamepad(joystick, "a")
 	return ctrl
 end
 
@@ -44,6 +45,10 @@ function players.update()
 		player.angle = vangle({player.controller.angleX.state, player.controller.angleY.state})
 	end
 
+	--fighting
+	if gp_bintrigger(player.controller, "triggerright", 0.4) then
+		player_attack(player)
+	end
 	end
 
 end
@@ -52,4 +57,8 @@ function players.draw()
 	for i, player in ipairs(players) do
 		love.graphics.draw(player.image, player.position[1], player.position[2], player.angle, 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
 	end
+end
+
+function player_attack(player)
+	player.angle = 90
 end
