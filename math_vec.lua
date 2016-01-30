@@ -33,6 +33,8 @@ function vmaxnorm(a)
 end
 
 function vnormed(a)
+	local n = vnorm(a)
+	if n == 0 then return {0, 0} end
 	return vmul(a, 1/vnorm(a))
 end
 

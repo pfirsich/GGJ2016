@@ -11,6 +11,7 @@ require "collision"
 require "objects"
 require "rituals"
 require "raycasting"
+require "anims"
 
 function love.load()
 	for k, scene in pairs(scenes) do

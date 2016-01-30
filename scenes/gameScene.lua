@@ -16,7 +16,7 @@ end
 
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	-- players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
+	players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
 	enemies.new("Heinz", enemies.images[enemies.imageIndex], 2)
 	enemies.imageIndex = enemies.imageIndex + 1
 end
@@ -61,9 +61,7 @@ function scenes.gameScene.draw()
 		love.graphics.draw(players.images[2], love.graphics.getWidth()-playerSizeX, playerSizeY, -math.pi/2.0, playerScale, playerScale)
 
 		for i = 1, #players[2].rituals do
-			print(players[2].rituals[i])
 			local text = rituals[players[2].rituals[i]]
-			print(text)
 			local textWidth = love.graphics.getFont():getWidth(text)
 			shadowText(text, love.graphics.getWidth() - textWidth - 10, (i-1)*25 + playerSizeY + 10)
 		end

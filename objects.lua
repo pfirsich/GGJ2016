@@ -27,10 +27,10 @@ genericObject.offset = {0,0}
 genericObject.interactOffset = vmul({0,0}, const.TILESIZE)
 genericObject.image = nil
 genericObject.radius = const.TILESIZE * 1.5
-genericObject.type = objType
 
 function newObject(objType)
 	local object = {}
+	object.type = objType
 	setmetatable(objectTypes[objType], {__index = genericObject})
 	setmetatable(object, {__index = objectTypes[objType]})
 	table.insert(objects, object)

@@ -8,7 +8,7 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 29,
+  nextobjectid = 34,
   properties = {},
   tilesets = {
     {
@@ -309,6 +309,32 @@ return {
           y = 905.333,
           width = 14.6667,
           height = 44,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 32,
+          name = "",
+          type = "spawn",
+          shape = "rectangle",
+          x = 338,
+          y = 1418,
+          width = 5,
+          height = 14,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 33,
+          name = "",
+          type = "spawn",
+          shape = "rectangle",
+          x = 720,
+          y = 1418,
+          width = 6,
+          height = 9,
           rotation = 0,
           visible = true,
           properties = {}
