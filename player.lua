@@ -21,7 +21,7 @@ end
 function players.new(name, image, controller)
 	local player = {}
 	player.name = name
-	player.position = {0, 0}
+	player.position = table.remove(map.spawns)
 	player.velocity = {0, 0}
 	player.lastVelocity = {0, 0}
 	player.image = image
@@ -30,6 +30,7 @@ function players.new(name, image, controller)
 	player.fallen = false
 	player.fallEnd = 0
 	player.rituals = generateRituals(12)
+	player.shoveStart = 0
 	player.imageIndex = players.imageIndex
 	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 9)
 	player.animationSet.animations = {
@@ -65,16 +66,17 @@ function players.update()
 			players.shove(player, vrotate({1,0}, love.math.random() * 2.0 * math.pi))
 		end
 
-
 		if player.controller.shove.pressed and not player.fallen then
-			player.shoveStart = scenes.gameState.simTime
+			player.shoveStart = scenes.gameScene.simTime
 
 			for j, other in ipairs(players) do
 				if i ~= j then
 					local rel = vsub(player.position, other.position)
 					if vdot(rel, rel) < const.PLAYER_SHOVE_DIST*const.PLAYER_SHOVE_DIST then
 						if vdot(rel, vpolar(player.angle, 1.0)) / vnorm(rel) < math.cos(const.PLAYER_SHOVE_ANGLE) then
-							players.shove(other, vsub(other.position, player.position))
+							if not other.fallen then
+								players.shove(other, vsub(other.position, player.position))
+							end
 						end
 					end
 				end
@@ -178,6 +180,9 @@ end
 
 function players.draw()
 	for i, player in ipairs(players) do
+		local shoveAmount = 1.0 - math.min(const.SHOVE_ANIM_DURATION, scenes.gameScene.simTime - player.shoveStart) / const.SHOVE_ANIM_DURATION
+		local shoveAnim = vmul(vnormed(player.velocity), math.sin(shoveAmount*math.pi)*math.sin(shoveAmount*math.pi)*const.SHOVE_AMOUNT)
+
 		love.graphics.setColor(255, 255, 255, 30)
 		local dir = vpolar(player.angle, 4.0 * const.TILESIZE)
 		love.graphics.setLineWidth(1)
@@ -186,9 +191,10 @@ function players.draw()
 		if player.col then love.graphics.setColor(255, 0, 0, 255) end
 		local angle = vangle(player.velocity)
 		if player.animationSet.currentAnimation == "fallen" then angle = scenes.gameScene.simTime * const.FALL_TURN_SPEED end
-		player.animationSet:draw(player.position[1], player.position[2], angle, 1.0, 1.0, player.image:getWidth()/2, player.image:getHeight()/2)
+		player.animationSet:draw(player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], angle, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
+								player.image:getWidth()/2, player.image:getHeight()/2)
 		if player.animationSet.currentAnimation ~= "fallen" then
-			love.graphics.draw(player.image, player.position[1], player.position[2], player.angle + math.pi, 1.0, 1.0,
+			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
 								player.image:getWidth()/2, player.image:getHeight()/2)
 		end
 	end
