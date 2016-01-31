@@ -3,8 +3,8 @@ rituals = {
 
 ritualTypes = {
 	{name = "doorOpen", id = 1, ritMsg = "Open a door", state = false},
-	{name = "objWomen01", id = 2, ritMsg = "\"Interact\" with a blonde woman", state = false},
-	{name = "objWomen02", id = 3, ritMsg = "\"Interact\" with a black haird woman", state = false},
+	{name = "objWomen01", id = 2, ritMsg = "Kill with a blonde person", state = false},
+	{name = "objWomen02", id = 3, ritMsg = "Kill a black haired person", state = false},
 	{name = "objVase", id = 4, ritMsg = "Steal a vase", state = false},
 	{name = "hit", id = 5, ritMsg = "Hit the other player", state = false},
 	{name = "objTable", id = 6, ritMsg = "Steal a table", state = false},
