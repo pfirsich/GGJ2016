@@ -143,7 +143,7 @@ function enemies.update()
 			end
 		end
 
-		if enemy.path then
+		if enemy.path and false then
 			if enemy.pathInterp == nil or enemy.pathInterp > 1 then
 				if enemy.pathInterp and enemy.pathInterp > 1 then
 					table.remove(enemy.path, 1)
