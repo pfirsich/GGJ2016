@@ -34,6 +34,7 @@ function scenes.gameScene.tick()
 end
 
 function scenes.gameScene.draw()
+	love.graphics.setColor(255, 255, 255, 255)
 	camera.push()
 	if map then drawMap() end
 	drawObjects()
