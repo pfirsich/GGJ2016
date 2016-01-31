@@ -7,7 +7,7 @@ In this game you play as two maniacs with compulsive tendencies, that, on their 
 
 # Credits
 
-* Nam Hoang Ngyuen - Programming
+* Nam Hoang Nguyen - Programming
 * Nico Piel - Music, Sound, Level design - http://soundcloud.com/nico-piel
 * Joel Schumacher - Programming - http://theshoemaker.de/
 * Roman Silitsch - Art
