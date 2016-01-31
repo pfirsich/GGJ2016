@@ -40,7 +40,7 @@ const = {
 	SHOVE_AMOUNT = TILESIZE * 1.1,
 
 	enemies = {
-		VIEW_ANGLE = 45.0/180.0*math.pi,
-		VIEW_DIST = TILESIZE*6,
+		VIEW_ANGLE = 38.0/180.0*math.pi,
+		VIEW_DIST = TILESIZE*6.5,
 	}
 }

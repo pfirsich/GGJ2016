@@ -31,7 +31,7 @@ end
 function enemies.draw()
 	love.graphics.setColor(255, 100, 100, 40)
 	for i, enemy in ipairs(enemies) do
-		love.graphics.arc("fill", enemy.position[1], enemy.position[2], const.enemies.VIEW_DIST, enemy.angle - const.enemies.VIEW_ANGLE/2, enemy.angle + const.enemies.VIEW_ANGLE/2)
+		love.graphics.arc("fill", enemy.position[1], enemy.position[2], const.enemies.VIEW_DIST, enemy.angle - const.enemies.VIEW_ANGLE, enemy.angle + const.enemies.VIEW_ANGLE)
 	end
 
 	for i, enemy in ipairs(enemies) do
