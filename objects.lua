@@ -10,9 +10,11 @@ objectTypes = {
 	-- baseball = {imaage = newImage("media/images/")}
 	-- pistol = {imaage = newImage("media/images/")}
 	-- painting = {imaage = newImage("media/images/")}
-	vase = {image = newImage("media/vase.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}},
-	blond = {image = newImage("media/blond.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}},
-	black = {image = newImage("media/black.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}}
+	vase = {image = newImage("media/images/vase.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}, removable = true},
+	blond = {image = newImage("media/images/blond.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0},},
+	black = {image = newImage("media/images/black.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0},},
+	bathtub = {image = newImage("media/images/bathtub.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0},},
+	tableq = {image = newImage("media/images/table.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}, removable = true}
 }
 
 genericObject = {}
@@ -29,6 +31,8 @@ genericObject.offset = {0,0}
 genericObject.interactOffset = vmul({0,0}, const.TILESIZE)
 genericObject.image = nil
 genericObject.radius = const.TILESIZE * 1.5
+genericObject.removable = false
+genericObject.interactStaticStatus = true
 
 function newObject(objType)
 	local object = {}
@@ -75,12 +79,27 @@ function objectTypes.vase.interact(self, player)
 	progressRitual(player, 4)
 end
 
+function objectTypes.tableq.interact(self, player)
+	progressRitual(player, 6)
+end
+
+function objectTypes.bathtub.interact(self, player)
+	TEsound.play("/media/sounds/bathtubsound.wav", const.SOU_VOLUME*0.1)
+	progressRitual(player, 7)
+end
+
 function objectTypes.blond.interact(self, player)
 	progressRitual(player, 2)
+	TEsound.play("/media/sounds/femalescream_1.wav", const.SOU_VOLUME*0.05)
+	self.interactStaticStatus = false
+	self.image = newImage("media/images/Player2_down.png")
 end
 
 function objectTypes.black.interact(self, player)
 	progressRitual(player, 3)
+	TEsound.play("/media/sounds/femalescream_2.wav", const.SOU_VOLUME*0.05)
+	self.interactStaticStatus = false
+	self.image = newImage("media/images/Player1_down.png")
 end
 
 function drawObjects()

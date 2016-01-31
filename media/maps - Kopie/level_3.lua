@@ -8,7 +8,7 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 53,
+  nextobjectid = 35,
   properties = {},
   tilesets = {
     {
@@ -18,7 +18,7 @@ return {
       tileheight = 32,
       spacing = 0,
       margin = 0,
-      image = "wall_tileset_NEU.png",
+      image = "wall_tileset.png",
       imagewidth = 160,
       imageheight = 320,
       tileoffset = {
@@ -418,76 +418,27 @@ return {
           properties = {}
         },
         {
-          id = 24,
-          name = "",
-          type = "enemy",
-          shape = "polyline",
-          x = 144,
-          y = 2828,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 },
-            { x = 1374, y = 6 }
-          },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
-          id = 25,
-          name = "",
-          type = "enemy",
-          shape = "polyline",
-          x = 140,
-          y = 2030,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 },
-            { x = 1384, y = 4 }
-          },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
           id = 26,
           name = "",
           type = "enemy",
           shape = "polyline",
-          x = 142,
-          y = 1230,
+          x = 271,
+          y = 1234,
           width = 0,
           height = 0,
           rotation = 0,
           visible = true,
           polyline = {
             { x = 0, y = 0 },
-            { x = 1372, y = -2 }
-          },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
-          id = 27,
-          name = "",
-          type = "enemy",
-          shape = "polyline",
-          x = 3088,
-          y = 1232,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 },
-            { x = 2, y = 798 }
+            { x = 1252, y = -4 },
+            { x = 1255, y = 794 },
+            { x = -130, y = 794 },
+            { x = -135, y = 1593 },
+            { x = 1245, y = 1590 },
+            { x = 2799, y = 1593 },
+            { x = 2804, y = 793 },
+            { x = 2794, y = -3 },
+            { x = 1278, y = -6 }
           },
           properties = {
             ["type"] = "transrapid"
@@ -497,64 +448,11 @@ return {
           id = 28,
           name = "",
           type = "enemy",
-          shape = "polyline",
-          x = 1508,
-          y = 2760,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 },
-            { x = 4, y = -662 }
-          },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
-          id = 29,
-          name = "",
-          type = "enemy",
-          shape = "polyline",
-          x = 3084,
-          y = 2834,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 },
-            { x = -1410, y = -2 }
-          },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
-          id = 30,
-          name = "",
-          type = "enemy",
           shape = "rectangle",
-          x = 712,
-          y = 968,
-          width = 14,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "roomba"
-          }
-        },
-        {
-          id = 31,
-          name = "",
-          type = "enemy",
-          shape = "rectangle",
-          x = 1126,
-          y = 2278,
-          width = 16,
-          height = 16,
+          x = 1838.67,
+          y = 1453.33,
+          width = 6.66667,
+          height = 4,
           rotation = 0,
           visible = true,
           properties = {
@@ -566,199 +464,32 @@ return {
           name = "",
           type = "enemy",
           shape = "rectangle",
-          x = 2472,
-          y = 1514,
-          width = 16,
-          height = 10,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "roomba"
-          }
-        },
-        {
-          id = 33,
-          name = "",
-          type = "enemy",
-          shape = "rectangle",
-          x = 744,
-          y = 2570,
-          width = 16,
-          height = 12,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "roomba"
-          }
-        },
-        {
-          id = 35,
-          name = "",
-          type = "enemy",
-          shape = "rectangle",
-          x = 1800,
-          y = 3048,
-          width = 14,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "roomba"
-          }
-        },
-        {
-          id = 36,
-          name = "",
-          type = "enemy",
-          shape = "rectangle",
-          x = 1162,
-          y = 3050,
-          width = 10,
-          height = 12,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["type"] = "roomba"
-          }
-        },
-        {
-          id = 39,
-          name = "",
-          type = "vase",
-          shape = "rectangle",
-          x = 198,
-          y = 1258,
-          width = 14,
-          height = 12,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 41,
-          name = "",
-          type = "vase",
-          shape = "rectangle",
-          x = 936,
-          y = 1704,
-          width = 14,
-          height = 14,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 42,
-          name = "",
-          type = "vase",
-          shape = "rectangle",
-          x = 648,
-          y = 1706,
+          x = 1512,
+          y = 2374.67,
           width = 12,
           height = 12,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["type"] = "roomba"
+          }
         },
         {
-          id = 43,
+          id = 34,
           name = "",
-          type = "blonde",
-          shape = "rectangle",
-          x = 776,
-          y = 1768,
-          width = 14,
-          height = 14,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 44,
-          name = "",
-          type = "black",
-          shape = "rectangle",
-          x = 1832,
-          y = 2218,
-          width = 14,
-          height = 10,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 45,
-          name = "",
-          type = "table",
-          shape = "rectangle",
-          x = 1832,
-          y = 2252,
-          width = 16,
-          height = 8,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 46,
-          name = "",
-          type = "weapon",
-          shape = "rectangle",
-          x = 2696,
-          y = 3144,
-          width = 14,
-          height = 14,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 49,
-          name = "",
-          type = "enemy",
+          type = "",
           shape = "polyline",
-          x = 2670,
-          y = 3026,
+          x = 18,
+          y = 20,
           width = 0,
           height = 0,
           rotation = 0,
           visible = true,
           polyline = {
             { x = 0, y = 0 },
-            { x = -222, y = -4 },
-            { x = -252, y = 94 }
+            { x = 255, y = -5.5 },
+            { x = 255, y = 93 }
           },
-          properties = {
-            ["type"] = "transrapid"
-          }
-        },
-        {
-          id = 50,
-          name = "",
-          type = "",
-          shape = "polyline",
-          x = 2262,
-          y = 3222,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polyline = {
-            { x = 0, y = 0 }
-          },
-          properties = {}
-        },
-        {
-          id = 52,
-          name = "",
-          type = "bathtub",
-          shape = "rectangle",
-          x = 424,
-          y = 3146,
-          width = 42,
-          height = 12,
-          rotation = 0,
-          visible = true,
           properties = {}
         }
       }

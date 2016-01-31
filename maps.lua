@@ -89,8 +89,22 @@ function loadMap(name)
 							
 						end
 						
-						if mapObject.type == "blond" then
+						if mapObject.type == "bathtub" then
 							local object = newObject(mapObject.type)
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+							
+						end
+						
+						if mapObject.type == "table" then
+							local object = newObject("tableq")
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+							
+						end
+						
+						if mapObject.type == "blonde" then
+							local object = newObject("blond")
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
 							

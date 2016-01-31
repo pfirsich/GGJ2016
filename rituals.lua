@@ -3,10 +3,12 @@ rituals = {
 
 ritualTypes = {
 	{name = "doorOpen", id = 1, ritMsg = "Open a door", state = false},
-	{name = "objWomen01", id = 2, ritMsg = "Kill a blond women", state = false},
-	{name = "objWomen02", id = 3, ritMsg = "Marry a black haired women", state = false},
-	{name = "objVase", id = 4, ritMsg = "Bang a Vasee", state = false},
+	{name = "objWomen01", id = 2, ritMsg = "\"Interact\" with a blonde woman", state = false},
+	{name = "objWomen02", id = 3, ritMsg = "\"Interact\" with a black haird woman", state = false},
+	{name = "objVase", id = 4, ritMsg = "Steal a vase", state = false},
 	{name = "hit", id = 5, ritMsg = "Hit the other player", state = false},
+	{name = "objTable", id = 6, ritMsg = "Steal a table", state = false},
+	{name = "objBath", id = 7, ritMsg = "You really need to wash yourself! Get in the bathtub", state = false}
 }
 
 
@@ -26,9 +28,12 @@ end
 
 function generateRituals(number)
 	local ret = {}
-	for i = 1, number do
+	for i = 1, number-1 do
 		table.insert(ret, newRitual(love.math.random(1, #ritualTypes)))
 	end
+	--es soll immer beendet werden mit dem Schlag eines Gegners
+	table.insert(ret, newRitual(5))
+	ret[number].ritMsg = "FINISH the other player!!!"
 	return ret
 end
 
