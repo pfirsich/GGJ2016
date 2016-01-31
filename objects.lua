@@ -55,8 +55,10 @@ function objectTypes.door.interact(self, player)
 			else
 				self.angle = self.originAngle + math.pi / 2.0
 			end
+			TEsound.play("/media/sounds/dooropen.wav", const.SOU_VOLUME*0.1)
 		else
 			self.angle = self.originAngle
+			TEsound.play("/media/sounds/dooropen.wav", const.SOU_VOLUME*0.1)
 		end
 		self:updateTiles()
 
