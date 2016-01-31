@@ -89,7 +89,7 @@ function enemies.update()
 		enemy.position = vadd(enemy.position, vmul(enemy.velocity, const.SIM_DT))
 
 		local deltaAng = angleDiff(enemy.targetAngle, enemy.angle)
-		enemy.angle = enemy.angle + deltaAng * (const.ENEMY_TURN_SPEED or 6.0) * const.SIM_DT
+		enemy.angle = enemy.angle + deltaAng * (const.ENEMY_TURN_SPEED or 15.0) * const.SIM_DT
 
 		-- collision
 		local getCollisionShape = function()
@@ -136,7 +136,7 @@ function enemies.update()
 		for p, player in ipairs(players) do
 			local rel = vsub(player.position, enemy.position)
 			if vdot(rel, lookDir) / vnorm(rel) > math.cos(const.enemies.VIEW_ANGLE) then
-				if vnorm(rel) < const.enemies.VIEW_DIST and not enemy.red then
+				if vnorm(rel) < const.enemies.VIEW_DIST then
 					-- tot!
 					players.kill(player)
 				end
