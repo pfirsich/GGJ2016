@@ -86,6 +86,29 @@ function loadMap(name)
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							table.insert(map.spawns, {(tx+0.5)*const.TILESIZE, (ty+0.5)*const.TILESIZE})
 						end
+
+						if mapObject.type == "enemy" then
+							if mapObject.properties.type == "roomba" then
+								local enemy = enemies.new("roomba")
+								enemy.position = {mapObject.x, mapObject.y}
+								enemy.angle = love.math.random() * 2.0 * math.pi
+							elseif mapObject.properties.type == "transrapid" then
+								if mapObject.polyline then
+									local enemy = enemies.new("transrapid")
+									enemy.path = {}
+									for j, point in ipairs(mapObject.polyline) do
+										table.insert(enemy.path, {point.x + mapObject.x + const.TILESIZE, point.y + mapObject.y + const.TILESIZE})
+									end
+
+									enemy.forward = true
+
+									enemy.position = enemy.path[1]
+									enemy.angle = 0
+								else
+									error("no polyline for transrapid")
+								end
+							end
+						end
 					end
 				end
 			end
