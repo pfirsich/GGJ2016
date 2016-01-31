@@ -12,8 +12,7 @@ end
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	--players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
-	enemies.new("Heinz", enemies.images[enemies.imageIndex], 2)
-	enemies.imageIndex = enemies.imageIndex + 1
+	enemies.new("roomba")
 end
 
 function scenes.gameScene.tick()
@@ -61,6 +60,11 @@ function scenes.gameScene.draw()
 			shadowText(text, love.graphics.getWidth() - textWidth - 10, (i-1)*25 + playerSizeY + 10)
 		end
 	end
+
+	if scenes.gameScene.dogMode then
+		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.print("DOGMODE", 5, 5)
+	end
 end
 
 function shadowText(text, x, y)
@@ -70,4 +74,19 @@ function shadowText(text, x, y)
 	love.graphics.setColor(255, 255, 0, 255)
 	love.graphics.print(text, x, y)
 	love.graphics.setColor(255, 255, 255, 255)
+end
+
+function scenes.gameScene.keypressed(key)
+	if key == "d" and scenes.gameScene.dogCounter == 0 or scenes.gameScene.dogCounter == nil then
+		print(key)
+		scenes.gameScene.dogCounter = 1
+	elseif key == "o" and scenes.gameScene.dogCounter == 1 then
+		print(key)
+		scenes.gameScene.dogCounter = 2
+	elseif key == "g" and scenes.gameScene.dogCounter == 2 then
+		print(key)
+		scenes.gameScene.dogMode = true
+	else
+		scenes.gameScene.dogCounter = 0
+	end
 end
