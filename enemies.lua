@@ -36,7 +36,7 @@ function enemies.draw()
 
 	for i, enemy in ipairs(enemies) do
 		love.graphics.setColor(255, 255, 255, 255)
-		if enemy.see then love.graphics.setColor(255, 0, 0, 255) end
+		if enemy.red then love.graphics.setColor(255, 0, 0, 255) end
 		enemy.animationSet:draw(enemy.position[1], enemy.position[2], enemy.angle, 1.0, 1.0,
 								enemy.animationSet.image:getHeight()/2, enemy.animationSet.image:getHeight()/2)
 	end
@@ -130,15 +130,40 @@ function enemies.update()
 			end
 		end
 
-		enemy.see = false
+		local playerInSight = {}
+		enemy.red = false
 		local lookDir = vpolar(enemy.angle, 1.0)
 		for p, player in ipairs(players) do
 			local rel = vsub(player.position, enemy.position)
 			if vdot(rel, lookDir) / vnorm(rel) > math.cos(const.enemies.VIEW_ANGLE) then
-				if vnorm(rel) < const.enemies.VIEW_DIST then
-					enemy.see = true
+				if vnorm(rel) < const.enemies.VIEW_DIST and not enemy.red then
+					enemy.red = true
+					enemy.type = "pursuit"
+					enemy.path = findPath(enemy.position[1], enemy.position[2], player.position[1], player.position[2])
+					print("find")
 				end
 			end
+		end
+
+		if enemy.path then
+			if enemy.pathInterp == nil or enemy.pathInterp > 1 then
+				if enemy.pathInterp and enemy.pathInterp > 1 then
+					table.remove(enemy.path, 1)
+				end
+
+				enemy.pathInterp = 0
+				enemy.pathStartPos = {enemy.path[1][2] * TILESIZE, enemy.path[1][1] * TILESIZE}
+				enemy.pathEndPos = {enemy.path[2][2] * TILESIZE, enemy.path[2][1] * TILESIZE}
+				local speed = const.TILESIZE * 5.0
+				enemy.pathInterpSpeed = speed / vnorm(vsub(enemy.pathStartPos, enemy.pathEndPos))
+			end
+
+			enemy.pathInterp = enemy.pathInterp + enemy.pathInterpSpeed * SIM_DT
+			enemy.targetPosition = vlerp(enemy.pathStartPos, enemy.pathEndPos, enemy.pathInterp)
+
+			local rel = vsub(enemy.targetPosition, enemy.position)
+			enemy.velocity = vmul(vnormed(rel), const.TILESIZE * 5.0)
+			enemy.targetAngle = vangle(enemy.velocity)
 		end
 
 		enemy.animationSet:update(const.SIM_DT)
