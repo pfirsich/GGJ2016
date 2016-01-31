@@ -10,7 +10,9 @@ objectTypes = {
 	-- baseball = {imaage = newImage("media/images/")}
 	-- pistol = {imaage = newImage("media/images/")}
 	-- painting = {imaage = newImage("media/images/")}
-	-- vase = {imaage = newImage("media/images/")}
+	vase = {image = newImage("media/vase.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}},
+	blond = {image = newImage("media/blond.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}},
+	black = {image = newImage("media/black.png"), radius = TILESIZE*1.7, interactOffset = {const.TILESIZE, 0}}
 }
 
 genericObject = {}
@@ -56,9 +58,10 @@ function objectTypes.door.interact(self, player)
 				self.angle = self.originAngle + math.pi / 2.0
 			end
 			TEsound.play("/media/sounds/dooropen.wav", const.SOU_VOLUME*0.1)
+			progressRitual(player, 1)
 		else
 			self.angle = self.originAngle
-			TEsound.play("/media/sounds/dooropen.wav", const.SOU_VOLUME*0.1)
+			TEsound.play("/media/sounds/doorclose.wav", const.SOU_VOLUME*0.1)
 		end
 		self:updateTiles()
 
@@ -66,6 +69,18 @@ function objectTypes.door.interact(self, player)
 		local delta = player.position[axis] - self.position[axis]
 		self.deadUntil = scenes.gameScene.simTime + const.DOOR_DEADTIME
 	end
+end
+
+function objectTypes.vase.interact(self, player)
+	progressRitual(player, 4)
+end
+
+function objectTypes.blond.interact(self, player)
+	progressRitual(player, 2)
+end
+
+function objectTypes.black.interact(self, player)
+	progressRitual(player, 3)
 end
 
 function drawObjects()
