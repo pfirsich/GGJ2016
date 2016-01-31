@@ -6,7 +6,7 @@ function scenes.gameScene.load()
 	loadMap(levelName)
 	loadMapPF(levelName)
 	--(sPosX, sPosY, ePosX, ePosY)
-
+	TEsound.playLooping("/media/sounds/backgroundmusic_2.wav", const.SOU_VOLUME*0.1)
 end
 
 function scenes.gameScene.onEnter(fromScene)
