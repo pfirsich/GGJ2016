@@ -2,17 +2,17 @@ require "pathfinder"
 scenes.gameScene = {}
 
 function scenes.gameScene.load()
-	local levelName = "level_3"
-	loadMap(levelName)
-	loadMapPF(levelName)
+	--loadMapPF(levelName)
 	--(sPosX, sPosY, ePosX, ePosY)
+end
+
+function scenes.gameScene.onEnter(level)
+	loadMap(level)
 	TEsound.playLooping("/media/sounds/backgroundmusic_2.wav", const.SOU_VOLUME*0.1)
 end
 
-function scenes.gameScene.onEnter(fromScene)
-	players.new("WOMBO COMBO", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	players.new("MOM GET THE CAMERA", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	--enemies.new("roomba")
+function scenes.gameScene.onExit()
+	TEsound.stop("/media/sounds/backgroundmusic_2.wav")
 end
 
 function scenes.gameScene.tick()

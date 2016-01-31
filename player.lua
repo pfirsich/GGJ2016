@@ -41,19 +41,28 @@ end
 function players.new(name, image, controller)
 	local player = {}
 	player.name = name
-	player.position = table.remove(map.spawns)
+	player.position = {0,0}
+	player.image = image
+	player.controller = controller
+
+	player.imageIndex = players.imageIndex
+	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 10)
+	player.headImage = newImage("media/images/Player" .. players.imageIndex .. ".png")
+
+	table.insert(players, player)
+	players.imageIndex = players.imageIndex + 1
+
+	players.refresh(player)
+end
+
+function players.refresh(player)
 	player.velocity = {0, 0}
 	player.lastVelocity = {0, 0}
-	player.image = image
 	player.angle = 0
-	player.controller = controller
 	player.fallen = false
 	player.fallEnd = 0
 	player.rituals = generateRituals(5)
 	player.shoveStart = 0
-	player.imageIndex = players.imageIndex
-	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 10)
-	player.headImage = newImage("media/images/Player" .. players.imageIndex .. ".png")
 	player.animationSet.animations = {
 		stand = animation(1, 1, 1.0),
 		walk = animation(1, 8, 16.0),
@@ -61,12 +70,8 @@ function players.new(name, image, controller)
 		dead = animation(10, 10, 1.0)
 	}
 	player.animationSet:setAnimation("stand")
-
 	player.formerFrame = player.animationSet:getCurrentFrame()
 	player.currentFrame = player.animationSet:getCurrentFrame()
-
-	table.insert(players, player)
-	players.imageIndex = players.imageIndex + 1
 end
 
 function slide(vec, normal, reflect) -- normal should be normalized
@@ -207,7 +212,7 @@ function players.update()
 					if object.removable then
 						table.remove(objects, i)
 					end
-					
+
 				end
 			end
 		end

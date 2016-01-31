@@ -23,6 +23,14 @@ function loadMap(name)
 		end
 	end
 
+	for i = 1, #enemies do
+		table.remove(enemies)
+	end
+
+	for i = 1, #objects do
+		table.remove(objects)
+	end
+
 	local tileset = map.tilesets[1]
 	for i, layer in ipairs(map.layers) do
 		if layer.visible then
@@ -81,35 +89,35 @@ function loadMap(name)
 							object.doorNormal = vortho(vpolar(object.angle, 1.0))
 							object:updateTiles()
 						end
-						
+
 						if mapObject.type == "vase" then
 							local object = newObject(mapObject.type)
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
-							
+
 						end
-						
+
 						if mapObject.type == "bathtub" then
 							local object = newObject(mapObject.type)
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
-							
+
 						end
-						
+
 						if mapObject.type == "table" then
 							local object = newObject("tableq")
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
-							
+
 						end
-						
+
 						if mapObject.type == "blonde" then
 							local object = newObject("blond")
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
 							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
-							
+
 						end
-						
+
 						if mapObject.type == "black" then
 							local object = newObject(mapObject.type)
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
@@ -149,6 +157,11 @@ function loadMap(name)
 
 			arrayShuffle(map.spawns)
 		end
+	end
+
+	for i = 1, #players do
+		players[i].position = table.remove(map.spawns)
+		players.refresh(players[i])
 	end
 end
 

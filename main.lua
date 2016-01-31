@@ -13,8 +13,11 @@ require "rituals"
 require "raycasting"
 require "anims"
 require "pathfinder"
+require "utility"
 
 function love.load()
+	autoFullscreen()
+
 	for k, scene in pairs(scenes) do
 		if k ~= "enterScene" and k ~= "currentScene" then
 			scene.simTime = 0
@@ -23,7 +26,7 @@ function love.load()
 		end
 	end
 
-	scenes.enterScene(scenes.gameScene)
+	scenes.enterScene(scenes.menu)
 end
 
 function love.run()

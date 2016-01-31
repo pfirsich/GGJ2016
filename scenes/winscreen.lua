@@ -45,7 +45,7 @@ function scenes.winScreen.draw()
 end
 
 function scenes.winScreen.keypressed(key)
-	if key == " " then
-
+	if key == "space" then
+		scenes.enterScene(scenes.levelChooser)
 	end
 end
