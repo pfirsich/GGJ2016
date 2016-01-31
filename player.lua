@@ -179,6 +179,8 @@ function players.update()
 		--orientation
 		if vnorm({player.controller.angleX.state, player.controller.angleY.state}) > const.GP_DEADZONE * 2 then --deadzone, higher than above because orientation with analog stick is weird
 			player.angle = vangle({player.controller.angleX.state, player.controller.angleY.state})
+		else
+			player.angle = vangle(player.velocity)
 		end
 
 		--fighting
