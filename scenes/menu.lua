@@ -8,7 +8,7 @@ function scenes.menu.load()
 end
 
 function scenes.menu.onEnter()
-	TEsound.playLooping("media/sounds/mainmenumusic.wav", 0.4)
+	TEsound.playLooping("media/sounds/mainmenumusic.wav", {"menu"}, 0.4)
 end
 
 function scenes.menu.onExit()

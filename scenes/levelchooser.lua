@@ -9,7 +9,7 @@ function scenes.levelChooser.onEnter()
 end
 
 function scenes.levelChooser.onExit()
-	TEsound.stop("media/sounds/mainlevelChoosermusic.wav")
+	TEsound.stop("menu")
 	love.graphics.setFont(defaultFont)
 end
 

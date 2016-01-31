@@ -8,11 +8,11 @@ end
 
 function scenes.gameScene.onEnter(level)
 	loadMap(level)
-	TEsound.playLooping("/media/sounds/backgroundmusic_2.wav", const.SOU_VOLUME*0.1)
+	TEsound.playLooping("/media/sounds/backgroundmusic_2.wav", {"game"}, const.SOU_VOLUME*0.1)
 end
 
 function scenes.gameScene.onExit()
-	TEsound.stop("/media/sounds/backgroundmusic_2.wav")
+	TEsound.stop("game")
 end
 
 function scenes.gameScene.tick()
