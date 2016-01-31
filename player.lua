@@ -202,9 +202,12 @@ function players.update()
 			if vdot(rel, rel) < object.radius*object.radius then
 				object.interactable = true
 
-				if player.controller.interact.pressed or (player.fallen and object.type == "door" and not object.open) then
+				if object.interactStaticStatus and (player.controller.interact.pressed or (player.fallen and object.type == "door" and not object.open) )then
 					object:interact(player)
-					table.remove(object)
+					if object.removable then
+						table.remove(objects, i)
+					end
+					
 				end
 			end
 		end
