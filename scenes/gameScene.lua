@@ -2,7 +2,7 @@ require "pathfinder"
 scenes.gameScene = {}
 
 function scenes.gameScene.load()
-	local levelName = "level_3"
+	local levelName = "level_2"
 	loadMap(levelName)
 	loadMapPF(levelName)
 	--(sPosX, sPosY, ePosX, ePosY)

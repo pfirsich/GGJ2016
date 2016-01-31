@@ -222,18 +222,24 @@ function players.draw()
 		if player.col then love.graphics.setColor(255, 0, 0, 255) end
 		local angle = vangle(player.velocity)
 		if player.animationSet.currentAnimation == "fallen" then angle = scenes.gameScene.simTime * const.FALL_TURN_SPEED end
-		player.animationSet:draw(player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], angle, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
+		local shoveScale = 1.0 + 0.3 * shoveAmount
+		player.animationSet:draw(player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], angle, shoveScale, shoveScale,
 								player.image:getWidth()/2, player.image:getHeight()/2)
 		if player.animationSet.currentAnimation ~= "fallen" then
-			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, 1.0 + 0.3 * shoveAmount, 1.0 + 0.3 * shoveAmount,
+			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, shoveScale, shoveScale,
 								player.image:getWidth()/2, player.image:getHeight()/2)
 		end
 
-		local hit = castRayIntoMap({player.position, vadd(player.position, {10,0})})
-		if hit then
-			--print("hit")
-			--love.graphics.circle("fill", hit[1], hit[2], 20)
-		end
+		-- local hit1 = castRayIntoMap_behindi({player.position, vadd(player.position, {10,0})})
+		-- local hit2 = castRayIntoMap_behindi({player.position, vadd(player.position, {-10,0})})
+		-- local hit3 = castRayIntoMap_behindi({player.position, vadd(player.position, {0,10})})
+		-- local hit4 = castRayIntoMap_behindi({player.position, vadd(player.position, {0,-10})})
+		-- if hit1 then love.graphics.circle("fill", hit1[1], hit1[2], 20) end
+		-- if hit2 then love.graphics.circle("fill", hit2[1], hit2[2], 20) end
+		-- if hit3 then love.graphics.circle("fill", hit3[1], hit3[2], 20) end
+		-- if hit4 then love.graphics.circle("fill", hit4[1], hit4[2], 20) end
+
+		-- love.graphics.circle("fill", 0, 0, 10)
 	end
 	love.graphics.setColor(255, 255, 255, 255)
 end

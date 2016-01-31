@@ -136,7 +136,7 @@ end
 function castRayIntoMap_behindi(ray, step)
 	step = step or 0.2
 	local cur = vret(ray[1])
-	local dir = ray[2]
+	local dir = vsub(ray[2], ray[1])
 
 	local dcur = vmul(vnormed(dir), const.TILESIZE * step)
 
@@ -145,7 +145,7 @@ function castRayIntoMap_behindi(ray, step)
 		if map.layers[1].solid[c[2]][c[1]] then
 			return cur
 		end
-		cur = vadd(cur, dir)
+		cur = vadd(cur, dcur)
 	end
 
 	return nil
@@ -176,7 +176,7 @@ function castRayIntoMap(ray)
 
 	while x > 0 and x <= map.width and y > 0 and y <= map.height do
 		if map.layers[1].solid[y][x] then
-			return {x*const.TILESIZE, y*const.TILESIZE}
+			return {ray[1][1] + rel[1]*tMaxX, ray[1][2] + rel[2]*tMaxY}
 		end
 
 		if(tMaxX < tMaxY) then
