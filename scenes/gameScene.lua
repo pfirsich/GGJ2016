@@ -10,8 +10,8 @@ function scenes.gameScene.load()
 end
 
 function scenes.gameScene.onEnter(fromScene)
-	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	--players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
+	players.new("WOMBO COMBO", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
+	players.new("MOM GET THE CAMERA", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
 	--enemies.new("roomba")
 end
 
@@ -27,6 +27,10 @@ function scenes.gameScene.tick()
 	players.update()
 	enemies.update()
 	camera.update()
+
+	if showWinScreen and scenes.gameScene.simTime > showWinScreen then
+		error("Player wins: " .. gameWinner.name)
+	end
 end
 
 function scenes.gameScene.draw()
@@ -38,7 +42,7 @@ function scenes.gameScene.draw()
 	camera.pop()
 
 	-- hud
-	local playerScale = 3.0
+	local playerScale = 1.0
 	local playerSizeX, playerSizeY = players.images[1]:getWidth() * playerScale, players.images[1]:getHeight() * playerScale
 	if #players >= 1 then
 		love.graphics.setColor(0, 0, 0, 255)

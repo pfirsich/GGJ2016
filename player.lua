@@ -3,8 +3,8 @@ require "TEsound"
 players = {}
 players.imageIndex = 1
 players.images = {
-	newImage("media/images/Player1.png"),
-	newImage("media/images/Player2.png"),
+	newImage("media/images/player1_fresse.png"),
+	newImage("media/images/player2_fresse.png"),
 }
 players.pchn01_vol = const.SOU_VOLUME * .1
 players.pchn01_snd = {
@@ -33,6 +33,11 @@ function getPlayerController_Gamepad(joystick)
 	return ctrl
 end
 
+function getPlayerController_Keyboard()
+	--local ctrl = {}
+	--ctrl.move = input.float
+end
+
 function players.new(name, image, controller)
 	local player = {}
 	player.name = name
@@ -47,11 +52,13 @@ function players.new(name, image, controller)
 	player.rituals = generateRituals(5)
 	player.shoveStart = 0
 	player.imageIndex = players.imageIndex
-	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 9)
+	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 10)
+	player.headImage = newImage("media/images/Player" .. players.imageIndex .. ".png")
 	player.animationSet.animations = {
 		stand = animation(1, 1, 1.0),
 		walk = animation(1, 8, 16.0),
-		fallen = animation(9, 9, 20.0)
+		fallen = animation(9, 9, 20.0),
+		dead = animation(10, 10, 1.0)
 	}
 	player.animationSet:setAnimation("stand")
 
@@ -208,10 +215,22 @@ function players.update()
 		player.animationSet:update(const.SIM_DT * vnorm(player.velocity) / const.PLAYER_SPEED)
 		player.formerFrame = player.currentFrame
 		player.currentFrame = player.animationSet:getCurrentFrame()
-		
+
 		if(hasWon(player))then
-			print(player.name)
-			print("hat gewonnen")
+			gameWinner = player
+			showWinScreen = scenes.gameScene.simTime + 2.0
+		end
+	end
+end
+
+function players.kill(player)
+	player.animationSet:setAnimation("dead")
+	scenes.enterScene(scenes.winScreen)
+
+	for i, other in ipairs(players) do
+		print(other)
+		if other ~= player then
+			gameWinner = other
 		end
 	end
 end
@@ -231,10 +250,10 @@ function players.draw()
 		if player.animationSet.currentAnimation == "fallen" then angle = scenes.gameScene.simTime * const.FALL_TURN_SPEED end
 		local shoveScale = 1.0 + 0.3 * shoveAmount
 		player.animationSet:draw(player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], angle, shoveScale, shoveScale,
-								player.image:getWidth()/2, player.image:getHeight()/2)
-		if player.animationSet.currentAnimation ~= "fallen" then
-			love.graphics.draw(player.image, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, shoveScale, shoveScale,
-								player.image:getWidth()/2, player.image:getHeight()/2)
+								player.headImage:getWidth()/2, player.headImage:getHeight()/2)
+		if player.animationSet.currentAnimation ~= "fallen" and player.animationSet.currentAnimation ~= "dead" then
+			love.graphics.draw(player.headImage, player.position[1] + shoveAnim[1], player.position[2] + shoveAnim[2], player.angle + math.pi, shoveScale, shoveScale,
+								player.headImage:getWidth()/2, player.headImage:getHeight()/2)
 		end
 
 		-- local hit1 = castRayIntoMap_behindi({player.position, vadd(player.position, {10,0})})

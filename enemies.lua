@@ -131,16 +131,14 @@ function enemies.update()
 		end
 
 		local playerInSight = {}
-		enemy.red = false
+		--enemy.red = false
 		local lookDir = vpolar(enemy.angle, 1.0)
 		for p, player in ipairs(players) do
 			local rel = vsub(player.position, enemy.position)
 			if vdot(rel, lookDir) / vnorm(rel) > math.cos(const.enemies.VIEW_ANGLE) then
 				if vnorm(rel) < const.enemies.VIEW_DIST and not enemy.red then
-					enemy.red = true
-					enemy.type = "pursuit"
-					enemy.path = findPath(enemy.position[1], enemy.position[2], player.position[1], player.position[2])
-					print("find")
+					-- tot!
+					players.kill(player)
 				end
 			end
 		end

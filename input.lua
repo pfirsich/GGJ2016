@@ -44,11 +44,13 @@ end
 
 function input.updateController(controller)
 	for k, control in pairs(controller) do
-		control.lastState = control.state
-		control.state = control.getState()
-		if type(control.state) == "boolean" then control.state = (control.state and 1 or 0) end
+		if not controller.frozen then
+			control.lastState = control.state
+			control.state = control.getState()
+			if type(control.state) == "boolean" then control.state = (control.state and 1 or 0) end
 
-		control.pressed = control.state > control.lastState
-		control.released = control.state < control.lastState
+			control.pressed = control.state > control.lastState
+			control.released = control.state < control.lastState
+		end
 	end
 end
