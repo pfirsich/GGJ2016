@@ -13,4 +13,4 @@ In this game you play as two maniacs with compulsive tendencies, that, on their 
 * Roman Silitsch - Art
 * Ruben Sparka - Programming
 
-We used [löve](https://love2d.org/) and [TEsound](https://love2d.org/wiki/TEsound)
+We used [löve](https://love2d.org/) and [TEsound](https://love2d.org/wiki/TEsound), which are awesome and you should use them aswell.
