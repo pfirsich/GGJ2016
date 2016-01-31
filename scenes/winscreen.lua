@@ -7,6 +7,7 @@ end
 
 function scenes.winScreen.onEnter()
 	TEsound.play("media/sounds/playerdeath.wav", 0.4)
+	winScreenStart = scenes.winScreen.simTime
 end
 
 function scenes.winScreen.tick()
@@ -22,8 +23,8 @@ function scenes.winScreen.draw()
 	local startTime = 2.0
 	local endTime = 4.0
 	local maxAlpha = 200
-	if scenes.winScreen.simTime > startTime then
-		alpha = math.min(maxAlpha, (scenes.winScreen.simTime - startTime) / (endTime - startTime) * maxAlpha)
+	if scenes.winScreen.simTime - winScreenStart > startTime then
+		alpha = math.min(maxAlpha, (scenes.winScreen.simTime - winScreenStart - startTime) / (endTime - startTime) * maxAlpha)
 	end
 
 	love.graphics.setColor(50, 50, 50, alpha)
@@ -33,7 +34,7 @@ function scenes.winScreen.draw()
 	love.graphics.setFont(bigFont)
 	local font = love.graphics.getFont()
 	love.graphics.setColor(255, 255, 255, 255)
-	if scenes.winScreen.simTime > endTime then
+	if scenes.winScreen.simTime - winScreenStart > endTime then
 		love.graphics.draw(gameWinner.image, love.graphics.getWidth()/2, love.graphics.getHeight()/3, -math.pi/2, 3.0, 3.0, 49, 49)
 		local text = "WINS"
 		love.graphics.print(text, love.graphics.getWidth()/2 - font:getWidth(text)/2, love.graphics.getHeight()/3*2)
