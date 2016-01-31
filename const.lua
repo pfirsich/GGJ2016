@@ -7,7 +7,7 @@ const = {
 	PLAYER_SPEED = 450, --maximal speed of player character
 	GP_DEADZONE = 0.2, --gamepad deadzone
 
-	
+
 
 	SIM_DT = SIM_DT,
 
@@ -37,5 +37,10 @@ const = {
 	PLAYER_SHOVE_DIST = 2.5 * TILESIZE,
 	PLAYER_SHOVE_ANGLE = 60.0 / 180.0 * math.pi,
 	SHOVE_ANIM_DURATION = 0.2,
-	SHOVE_AMOUNT = TILESIZE * 1.1
+	SHOVE_AMOUNT = TILESIZE * 1.1,
+
+	enemies = {
+		VIEW_ANGLE = 45.0/180.0*math.pi,
+		VIEW_DIST = TILESIZE*6,
+	}
 }

@@ -6,22 +6,22 @@ function loadMapPF(name)
 	for i, layer in ipairs(map.layers) do
 		if layer.visible then
 			if layer.type == "tilelayer" then
-		parseMap = {}
-		index = 1
-		for y = 1, layer.width do
-			teilMap = {}
-			for x = 1, layer.width do
-				local tileIndex = layer.data[index]
-				index = index + 1
-				if map.layers[1].solid[y][x] then
-					teilMap[x]=0
-				else
-				    teilMap[x]=1
+				parseMap = {}
+				index = 1
+				for y = 1, layer.width do
+					teilMap = {}
+					for x = 1, layer.width do
+						local tileIndex = layer.data[index]
+						index = index + 1
+						if map.layers[1].solid[y][x] then
+							teilMap[x]=0
+						else
+						    teilMap[x]=1
 
+						end
+					end
+					parseMap[y]=teilMap
 				end
-			end
-			parseMap[y]=teilMap
-		end
 			end
 		end
 	end

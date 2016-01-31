@@ -14,3 +14,13 @@ function generateRituals(number)
 	end
 	return ret
 end
+
+function progressRitual(player, name)
+	if player.rituals[1] == name then
+		table.remove(player.rituals, 1)
+	end
+
+	-- TODO: alle weg
+end
+
+--progressRitual(player, "doorOpen")

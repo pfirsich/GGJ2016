@@ -8,7 +8,7 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 24,
+  nextobjectid = 35,
   properties = {},
   tilesets = {
     {
@@ -415,6 +415,81 @@ return {
           height = 14,
           rotation = 0,
           visible = true,
+          properties = {}
+        },
+        {
+          id = 26,
+          name = "",
+          type = "enemy",
+          shape = "polyline",
+          x = 271,
+          y = 1234,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polyline = {
+            { x = 0, y = 0 },
+            { x = 1252, y = -4 },
+            { x = 1255, y = 794 },
+            { x = -130, y = 794 },
+            { x = -135, y = 1593 },
+            { x = 1245, y = 1590 },
+            { x = 2799, y = 1593 },
+            { x = 2804, y = 793 },
+            { x = 2794, y = -3 },
+            { x = 1278, y = -6 }
+          },
+          properties = {
+            ["type"] = "transrapid"
+          }
+        },
+        {
+          id = 28,
+          name = "",
+          type = "enemy",
+          shape = "rectangle",
+          x = 1838.67,
+          y = 1453.33,
+          width = 6.66667,
+          height = 4,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["type"] = "roomba"
+          }
+        },
+        {
+          id = 32,
+          name = "",
+          type = "enemy",
+          shape = "rectangle",
+          x = 1512,
+          y = 2374.67,
+          width = 12,
+          height = 12,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["type"] = "roomba"
+          }
+        },
+        {
+          id = 34,
+          name = "",
+          type = "",
+          shape = "polyline",
+          x = 18,
+          y = 20,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polyline = {
+            { x = 0, y = 0 },
+            { x = 255, y = -5.5 },
+            { x = 255, y = 93 }
+          },
           properties = {}
         }
       }

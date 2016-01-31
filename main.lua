@@ -12,6 +12,7 @@ require "objects"
 require "rituals"
 require "raycasting"
 require "anims"
+require "pathfinder"
 
 function love.load()
 	for k, scene in pairs(scenes) do
@@ -52,8 +53,8 @@ function love.run()
 						end
 					end
 					love.handlers[name](a,b,c,d,e,f)
-					if scenes.currentScene[e] then
-						scenes.currentScene[e](a, b, c, d)
+					if scenes.currentScene[name] then
+						scenes.currentScene[name](a, b, c, d, e, f)
 					end
 				end
 			end
