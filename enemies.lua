@@ -4,10 +4,11 @@ enemies.images = {
 	newImage("media/enemy.png"),
 }
 
+
 function enemies.new(name, image, type)
 	local enemy = {}
 	enemy.name = name
-	enemy.position = {0, 0}
+	enemy.position = {1550, 600}
 	enemy.velocity = {0, 0}
 	enemy.image = image
 	enemy.angle = 0
@@ -31,7 +32,6 @@ function enemies.update()
 
 	for i, enemy in ipairs(enemies) do
 
-
 		if enemy.type == 1 then
 			if enemy.startTimer == 0 then
 				enemy.startTimer = scenes.currentScene.simTime
@@ -54,16 +54,31 @@ function enemies.update()
 			end
 
 		elseif enemy.type == 3 then
-			playerToDes = players[1]
-
-			pathOfDes = findPath(enemy.pos[1], enemy.pos[2], playerToDes.pos[2], playerToDes.pos[2])
-
 
 		end
 
 	end
 end
 
+
+function enemies.chase(player, enemy)
+
+		print("starting operation!")
+		local pathstorage = findPath(enemy.position[1], enemy.position[2], player.position[1], player.position[2])
+		print("acquired path="..pathstorage[1])
+
+		--turn towards first anchor point
+		local turned = false
+		while not turned do
+			turned = enemies.tarangle(math.atan(enemy.position[1] - (pathstorage[#pathstorage][2])/(pathstorage[#pathstorage][1] - enemy.position[1])), 1, enemy)
+			print("turning")
+		end
+
+		for i = 1, #pathstorage do
+			--nothing right now
+		end
+
+end
 
 function enemies.tarangle(angle, speed, enemy)
 	enemy.shouldTurn = true
@@ -73,6 +88,7 @@ function enemies.tarangle(angle, speed, enemy)
 		enemy.targetAngle = enemy.angle + math.pi
 		enemy.shouldTurn = false
 		enemy.startTimer = scenes.currentScene.simTime
+		return true;
 	elseif anglecalc(angle, enemy.angle) < 0  then
 		enemy.angle = enemy.angle - math.pi*speed*const.SIM_DT
 	else
