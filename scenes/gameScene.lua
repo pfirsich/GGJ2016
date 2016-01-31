@@ -11,8 +11,8 @@ end
 
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
-	enemies.new("roomba")
+	--players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
+	--enemies.new("roomba")
 end
 
 function scenes.gameScene.tick()

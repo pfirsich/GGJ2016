@@ -39,7 +39,7 @@ function findPath(sPosX, sPosY, ePosX, ePosY)
 
 	enqueue(root)
 	zaehler = 1
-	while zaehler ~=5000 do
+	while zaehler ~=2000 do
 		place = dequeue()
 		local break1 = false
 
@@ -58,8 +58,8 @@ function findPath(sPosX, sPosY, ePosX, ePosY)
 			for i=1, #path do
 				print(path[i][1]..path[i][2])
 			end
-			print("Schritt: "..#path)
-			print ("zaehler: "..zaehler)
+			-- print("Schritt: "..#path)
+			-- print ("zaehler: "..zaehler)
 			return path
 
 		else
@@ -85,7 +85,7 @@ function findPath(sPosX, sPosY, ePosX, ePosY)
 		end
 		zaehler = zaehler + 1
 	end
-	print("nix gefunden")
+	-- print("nix gefunden")
 end
 
 function enqueue(x)
