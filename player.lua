@@ -44,7 +44,7 @@ function players.new(name, image, controller)
 	player.controller = controller
 	player.fallen = false
 	player.fallEnd = 0
-	player.rituals = generateRituals(12)
+	player.rituals = generateRituals(5)
 	player.shoveStart = 0
 	player.imageIndex = players.imageIndex
 	player.animationSet = animationSet(newImage("media/images/Player" .. players.imageIndex .. "_anim.png"), 9)
@@ -97,6 +97,7 @@ function players.update()
 						if vdot(rel, vpolar(player.angle, 1.0)) / vnorm(rel) < math.cos(const.PLAYER_SHOVE_ANGLE) then
 							if not other.fallen then
 								players.shove(other, vsub(other.position, player.position))
+								progressRitual(player, 5)
 							end
 						end
 					end
@@ -196,6 +197,7 @@ function players.update()
 
 				if player.controller.interact.pressed or (player.fallen and object.type == "door" and not object.open) then
 					object:interact(player)
+					table.remove(object)
 				end
 			end
 		end
@@ -206,6 +208,11 @@ function players.update()
 		player.animationSet:update(const.SIM_DT * vnorm(player.velocity) / const.PLAYER_SPEED)
 		player.formerFrame = player.currentFrame
 		player.currentFrame = player.animationSet:getCurrentFrame()
+		
+		if(hasWon(player))then
+			print(player.name)
+			print("hat gewonnen")
+		end
 	end
 end
 

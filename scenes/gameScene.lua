@@ -6,12 +6,12 @@ function scenes.gameScene.load()
 	loadMap(levelName)
 	loadMapPF(levelName)
 	--(sPosX, sPosY, ePosX, ePosY)
-
+	TEsound.playLooping("/media/sounds/backgroundmusic_2.wav", const.SOU_VOLUME*0.1)
 end
 
 function scenes.gameScene.onEnter(fromScene)
 	players.new("Player1", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[1]))
-	--players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
+	players.new("Player2", players.images[players.imageIndex], getPlayerController_Gamepad(love.joystick.getJoysticks()[2]))
 	enemies.new("roomba")
 end
 
@@ -20,6 +20,9 @@ function scenes.gameScene.tick()
 	-- if scenes.gameScene.i % 10 == 0 then
 	-- 	print ("sec")
 	-- end
+	if love.keyboard.isDown('escape') then
+		love.event.push('quit')
+	end
 	updateObjects()
 	players.update()
 	enemies.update()
@@ -44,7 +47,7 @@ function scenes.gameScene.draw()
 		love.graphics.draw(players.images[1], 0, playerSizeY, -math.pi/2.0, playerScale, playerScale)
 
 		for i = 1, #players[1].rituals do
-			shadowText(rituals[players[1].rituals[i]], 10, (i-1)*25 + playerSizeY + 10)
+			shadowText(players[1].rituals[i].ritMsg, 10, (i-1)*25 + playerSizeY + 10)
 		end
 	end
 
@@ -55,7 +58,7 @@ function scenes.gameScene.draw()
 		love.graphics.draw(players.images[2], love.graphics.getWidth()-playerSizeX, playerSizeY, -math.pi/2.0, playerScale, playerScale)
 
 		for i = 1, #players[2].rituals do
-			local text = rituals[players[2].rituals[i]]
+			local text = players[2].rituals[i].ritMsg
 			local textWidth = love.graphics.getFont():getWidth(text)
 			shadowText(text, love.graphics.getWidth() - textWidth - 10, (i-1)*25 + playerSizeY + 10)
 		end

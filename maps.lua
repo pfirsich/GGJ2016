@@ -81,6 +81,26 @@ function loadMap(name)
 							object.doorNormal = vortho(vpolar(object.angle, 1.0))
 							object:updateTiles()
 						end
+						
+						if mapObject.type == "vase" then
+							local object = newObject(mapObject.type)
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+							
+						end
+						
+						if mapObject.type == "blond" then
+							local object = newObject(mapObject.type)
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+							
+						end
+						
+						if mapObject.type == "black" then
+							local object = newObject(mapObject.type)
+							local tx, ty = worldToTiles(mapObject.x, mapObject.y)
+							object.position = {tx * const.TILESIZE, ty * const.TILESIZE}
+						end
 
 						if mapObject.type == "spawn" then
 							local tx, ty = worldToTiles(mapObject.x, mapObject.y)

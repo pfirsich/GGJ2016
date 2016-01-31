@@ -8,7 +8,7 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 15,
+  nextobjectid = 20,
   properties = {},
   tilesets = {
     {
@@ -158,19 +158,6 @@ return {
       properties = {},
       objects = {
         {
-          id = 1,
-          name = "",
-          type = "door",
-          shape = "rectangle",
-          x = 776,
-          y = 1096,
-          width = 45.3333,
-          height = 13.3333,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 2,
           name = "",
           type = "door",
@@ -296,6 +283,84 @@ return {
           y = 556,
           width = 7,
           height = 10,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 14,
+          name = "",
+          type = "blond",
+          shape = "rectangle",
+          x = 1322,
+          y = 531.667,
+          width = 16,
+          height = 17.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 15,
+          name = "",
+          type = "vase",
+          shape = "rectangle",
+          x = 193,
+          y = 170.667,
+          width = 16,
+          height = 17.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 16,
+          name = "",
+          type = "black",
+          shape = "rectangle",
+          x = 323,
+          y = 1009.67,
+          width = 16,
+          height = 17.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 17,
+          name = "",
+          type = "vase",
+          shape = "rectangle",
+          x = 1223,
+          y = 940.667,
+          width = 16,
+          height = 17.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 18,
+          name = "",
+          type = "black",
+          shape = "rectangle",
+          x = 1281,
+          y = 225.667,
+          width = 16,
+          height = 17.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 19,
+          name = "",
+          type = "blond",
+          shape = "rectangle",
+          x = 1126,
+          y = 421.667,
+          width = 16,
+          height = 17.333,
           rotation = 0,
           visible = true,
           properties = {}
